@@ -35,27 +35,32 @@ export class BoxCollider extends Component
                 {
                     const colliderHolder = collider.holder;
 
-                    const collideRect = collider._Collide(this);
+                    const clipDistances = {
+                        top: Math.abs( (colliderHolder.y + colliderHolder.height) - this.holder.y),
+                        bottom: Math.abs(colliderHolder.y - (this.holder.y + this.holder.height) ),
+                        left: Math.abs( (colliderHolder.x + colliderHolder.width) - this.holder.x),
+                        right: Math.abs(colliderHolder.x - (this.holder.x + this.holder.width) )
+                    }
 
-                    if(collisionRect["left"])
+                    if(collisionRect["left"] && (clipDistances.left < clipDistances.top && clipDistances.left < clipDistances.bottom))
                     {
                         physics.baseVelocity.x = 0;
                         this.holder.x = collider.holder.x + collider.holder.width;
                     }
 
-                    if(collisionRect["right"])
+                    if(collisionRect["right"] && (clipDistances.right < clipDistances.top && clipDistances.right < clipDistances.bottom))
                     {
                         physics.baseVelocity.x = 0;
                         this.holder.x = collider.holder.x - this.holder.width;
                     }
 
-                    if(collisionRect["bottom"])
+                    if(collisionRect["bottom"] && (clipDistances.bottom < clipDistances.left && clipDistances.bottom < clipDistances.right))
                     {
                         physics.baseVelocity.y = 0;
                         this.holder.y = collider.holder.y - this.holder.height;
                     }
 
-                    if(collisionRect["top"])
+                    if(collisionRect["top"] && (clipDistances.top < clipDistances.left && clipDistances.top < clipDistances.right))
                     {
                         physics.baseVelocity.y = 0;
                         this.holder.y = collider.holder.y + collider.holder.height;
