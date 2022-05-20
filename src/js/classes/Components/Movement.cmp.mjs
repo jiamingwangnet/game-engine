@@ -24,7 +24,9 @@ export class Movement extends Component {
     }
 
     __Update__() {
-        if (this._holder._game.keystrokes["w"] && this._holder.GetComponent(BoxCollider).CollideAll().bottom) {
+        const groundCheck = this._holder.GetComponent(BoxCollider).CollideAll();
+
+        if (this._holder._game.keystrokes["w"] && !(Math.abs(this.holder.GetComponent(Physics).baseVelocity.y) > 0) && groundCheck.bottom) {           
             this._moveVector.y = -1;
         }
         else {

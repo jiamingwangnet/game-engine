@@ -129,6 +129,13 @@ export class BoxCollider extends Component
         rect1.y + rect1.height > rect2.y + rect2.height + 1 &&
         rect1.x < rect2.x + rect2.width + 1 &&
         rect1.x + rect1.width > rect2.x - 1;
+
+        const clipDistances = {
+            top: Math.abs( (rect2.y + rect2.height) - this.holder.y),
+            bottom: Math.abs(rect2.y - (this.holder.y + this.holder.height) ),
+            left: Math.abs( (rect2.x + rect2.width) - this.holder.x),
+            right: Math.abs(rect2.x - (this.holder.x + this.holder.width) )
+        }
         
 
         return {
@@ -136,7 +143,8 @@ export class BoxCollider extends Component
             left: left,
             right: right,
             bottom: bottom,
-            top: top
+            top: top,
+            clipDistances: clipDistances,
         }
     }
 
@@ -147,7 +155,9 @@ export class BoxCollider extends Component
             left: false,
             right: false,
             bottom: false,
-            top: false
+            top: false,
+            clipDistances: [],
+            collisions: []
         }
 
         for(const gobj of this._game.gameObjects){
@@ -156,11 +166,24 @@ export class BoxCollider extends Component
             const collider = gobj.GetComponent(BoxCollider);
             if(collider)
             {
+                const clipDistances = {
+                    top: Math.abs( (gobj.y + gobj.height) - this.holder.y),
+                    bottom: Math.abs(gobj.y - (this.holder.y + this.holder.height) ),
+                    left: Math.abs( (gobj.x + gobj.width) - this.holder.x),
+                    right: Math.abs(gobj.x - (this.holder.x + this.holder.width) )
+                }
+
                 res.collided = res.collided || this.Collide(collider).collided;
                 res.left = res.left || this.Collide(collider).left;
                 res.right = res.right || this.Collide(collider).right;
                 res.bottom = res.bottom || this.Collide(collider).bottom;
                 res.top = res.top || this.Collide(collider).top;
+                
+                if(res.collided)
+                {
+                    res.clipDistances.push(clipDistances);
+                    res.collisions.push(collider);
+                }
             }
         }
 

@@ -31,6 +31,15 @@ game.__EarlyLoad__ = () => {
     const higherFloor = new Block(1100, window.innerHeight-220, 500, 200, "blue", game, "higherFloor")
     game.AddGameObject(higherFloor);
 
+    const higherFloor2 = new Block(1000, window.innerHeight-220, 50, 50, "cyan", game, "higherFloor2")
+    game.AddGameObject(higherFloor2);
+    const higherFloor3 = new Block(940, window.innerHeight-220, 50, 50, "dodgerblue", game, "higherFloor3")
+    game.AddGameObject(higherFloor3);
+    const higherFloor4 = new Block(880, window.innerHeight-220, 50, 50, "navy", game, "higherFloor4")
+    game.AddGameObject(higherFloor4);
+    const higherFloor5 = new Block(820, window.innerHeight-220, 50, 50, "teal", game, "higherFloor5")
+    game.AddGameObject(higherFloor5);
+
     const roof = new Block(450, window.innerHeight-210, 1000, 10, "brown", game, "roof");
     game.AddGameObject(roof);
 }
