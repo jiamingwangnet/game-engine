@@ -5,6 +5,11 @@ import { Block } from "./classes/GameObject/Block.gobj.mjs";
 import { Player } from "./Player.gobj.mjs";
 import { Vector } from "./classes/Vector.mjs";
 
+/* 
+SOME TESTING CODE
+MIGHT REMOVE LATER
+*/
+
 const canvas = document.querySelector("#c");
 const game = new Game(canvas, 120, "#000000", true);
 
