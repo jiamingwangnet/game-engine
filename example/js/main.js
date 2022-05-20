@@ -1,14 +1,9 @@
-import { BoxCollider } from "./classes/Components/BoxCollider.cmp.mjs";
-import { Physics } from "./classes/Components/Physics.cmp.mjs";
-import { Game } from "./classes/Game.mjs";
-import { Block } from "./classes/GameObject/Block.gobj.mjs";
+import { BoxCollider } from "../../src/Components/BoxCollider.cmp.mjs";
+import { Physics } from "../../src/Components/Physics.cmp.mjs";
+import { Game } from "../../src/Game.mjs";
+import { Block } from "../../src/GameObject/Block.gobj.mjs";
 import { Player } from "./Player.gobj.mjs";
-import { Vector } from "./classes/Vector.mjs";
-
-/* 
-SOME TESTING CODE
-MIGHT REMOVE LATER
-*/
+import { Vector } from "../../src/Vector.mjs";
 
 const canvas = document.querySelector("#c");
 const game = new Game(canvas, 120, "#000000", true);
