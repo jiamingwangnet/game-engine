@@ -42,17 +42,17 @@ export class Renderer extends Component
         }
     }
 
-    Render()
+    Render(offsetX, offsetY)
     {
         if(this._using == Renderer.Color)
         {
             
-            this._ctx.drawImage(this._drawing, this._x, this._y);
+            this._ctx.drawImage(this._drawing, this._x + offsetX, this._y + offsetY);
 
         }
         else if(this.using == Renderer.Image)
         {
-            this._ctx.drawImage(this._image, this._x, this._y);
+            this._ctx.drawImage(this._image, this._x + offsetX, this._y + offsetY);
         }
         else
         {

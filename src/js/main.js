@@ -28,6 +28,12 @@ game.__EarlyLoad__ = () => {
     const wall3 = new Block(310, window.innerHeight-120, 20, 100, "gray", game, "wall3");
     game.AddGameObject(wall3);
 
+    const wall4 = new Block(370, window.innerHeight-170, 20, 150, "gray", game, "wall4");
+    game.AddGameObject(wall4);
+
+    const wall5 = new Block(390, window.innerHeight-120, 20, 100, "gray", game, "wall5");
+    game.AddGameObject(wall5);
+
     const higherFloor = new Block(1100, window.innerHeight-220, 500, 200, "blue", game, "higherFloor")
     game.AddGameObject(higherFloor);
 
@@ -42,6 +48,8 @@ game.__EarlyLoad__ = () => {
 
     const roof = new Block(450, window.innerHeight-210, 1000, 10, "brown", game, "roof");
     game.AddGameObject(roof);
+
+    game.camera.follow = player;
 }
 
 game.__Render__ = () => {

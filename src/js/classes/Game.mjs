@@ -1,3 +1,4 @@
+import { Camera } from "./Camera.mjs";
 import { GameObject } from "./GameObject.mjs";
 
 let lastUpdate = Date.now();
@@ -6,14 +7,14 @@ export class Game
 {
     constructor(canvas, fps, background) 
     {
-        this._canvas = canvas;
         this._gameObjects = [];
-        this._background = background;
         this._fps = fps;
-        this._ctx = canvas.getContext("2d");
 
         this._deltaTime = 0;
         this._keystrokes = {};
+
+        this._canvas = canvas;
+        this._camera = new Camera(canvas, background);
     }
     
     get gameObjects(){return this._gameObjects}
@@ -22,6 +23,7 @@ export class Game
     get canvas(){return this._canvas;}
     get keystrokes(){return this._keystrokes;}
     get deltaTime(){return this._deltaTime;}
+    get camera(){return this._camera;}
 
     __Load__(){}
     __Update__(){}
@@ -51,17 +53,9 @@ export class Game
     }
 
     Render() 
-    {
-        this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);        
-
+    {      
         this.__EarlyRender__();
-        this._ctx.fillStyle = this._background;
-        this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
-        
-        for(const object of this._gameObjects)
-        {
-            object.Render();
-        }
+        this._camera.Render(this._gameObjects);
         this.__Render__();
     }
 
@@ -76,6 +70,7 @@ export class Game
         {
             object.Update();
         }
+        this._camera.Update();
         this.__Update__();
 
         this.Render();
