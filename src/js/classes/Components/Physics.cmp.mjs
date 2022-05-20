@@ -38,7 +38,7 @@ export class Physics extends Component
 
     __Update__()
     {
-        if(game.gravity) this.ApplyGravity();
+        if(this._game.gravity) this.ApplyGravity();
         let totalVelocity = new Vector(0,0);
 
         totalVelocity.Add(this._velocity);
