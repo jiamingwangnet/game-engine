@@ -13,6 +13,7 @@ export class GameObject
         this._renderer = new Renderer(game.canvas, width, height, x, y, this);
         this._game = game;
         this._name = name;
+        this._started = false;
     }
 
     get width(){return this._width;}
@@ -32,6 +33,7 @@ export class GameObject
     }
     get renderer(){return this._renderer;}
     get name(){return this._name;}
+    get started(){return this._started;}
 
     __Start__(){}
     __Update__(){}
@@ -59,6 +61,7 @@ export class GameObject
 
     Start()
     {
+        this._started = true;
         this.__EarlyStart__();
         this._renderer.Start();
         for(const cmp of this._components)

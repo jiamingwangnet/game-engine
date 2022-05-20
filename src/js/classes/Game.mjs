@@ -51,6 +51,7 @@ export class Game
         this._canvas.height = window.innerHeight;
         for(const object of this._gameObjects)
         {
+            if(!object.started)
             object.Start();
         }
         this.__Load__();
@@ -92,6 +93,7 @@ export class Game
         if(gameObject instanceof GameObject)
         {
             this._gameObjects.push(gameObject);
+            gameObject.Start();
         }
         else
         {
