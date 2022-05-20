@@ -5,7 +5,7 @@ let lastUpdate = Date.now();
 
 export class Game 
 {
-    constructor(canvas, fps, background) 
+    constructor(canvas, fps, background, gravity=true) 
     {
         this._gameObjects = [];
         this._fps = fps;
@@ -15,6 +15,8 @@ export class Game
 
         this._canvas = canvas;
         this._camera = new Camera(canvas, background);
+
+        this._gravity = gravity;
     }
     
     get gameObjects(){return this._gameObjects}
@@ -24,6 +26,8 @@ export class Game
     get keystrokes(){return this._keystrokes;}
     get deltaTime(){return this._deltaTime;}
     get camera(){return this._camera;}
+    get gravity(){return this._gravity;}
+    set gravity(gravity){this._gravity = gravity;}
 
     __Load__(){}
     __Update__(){}

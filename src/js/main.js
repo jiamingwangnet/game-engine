@@ -6,17 +6,17 @@ import { Player } from "./classes/GameObject/Player.gobj.mjs";
 import { Vector } from "./classes/Vector.mjs";
 
 const canvas = document.querySelector("#c");
-const game = new Game(canvas, 120, "#000000");
+const game = new Game(canvas, 120, "#000000", true);
 
 game.__Load__ = () => {
     
 }
 
 game.__EarlyLoad__ = () => {
-    const player = new Player(10, 10, game, "player");
+    const player = new Player(10, 3, game, "player");
     game.AddGameObject(player);
 
-    const floor = new Block(0, window.innerHeight - 40, window.innerWidth, 50, "#096e00", game, "floor");
+    const floor = new Block(-10000, window.innerHeight - 40, 20000, 50, "#096e00", game, "floor");
     game.AddGameObject(floor);
 
     const wall = new Block(350, window.innerHeight-220, 20, 200, "gray", game, "wall");
