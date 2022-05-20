@@ -68,3 +68,5 @@ window.game = game;
 window.Vector = Vector;
 window.Physics = Physics;
 window.BoxCollider = BoxCollider;
+window.Block = Block;
+window.Player = Player;
