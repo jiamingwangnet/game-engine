@@ -17,6 +17,7 @@ export class Game
         this._camera = new Camera(canvas, background);
 
         this._gravity = gravity;
+        this._paused = false;
     }
     
     get gameObjects(){return this._gameObjects}
@@ -28,6 +29,8 @@ export class Game
     get camera(){return this._camera;}
     get gravity(){return this._gravity;}
     set gravity(gravity){this._gravity = gravity;}
+    set paused(paused){this._paused = paused;}
+    get paused(){return this._paused;}
 
     __Load__(){}
     __Update__(){}
@@ -45,6 +48,10 @@ export class Game
         window.addEventListener("keyup", e => {
             this.keystrokes[e.key.toLowerCase()] = false;
         })
+
+        document.addEventListener("visibilitychange", e => {
+            this.paused = document.hidden;
+        });
 
         this. __EarlyLoad__();
         this._canvas.width = window.innerWidth;
@@ -66,19 +73,27 @@ export class Game
 
     Update()
     {
-        const now = Date.now();
-        this._deltaTime = now - lastUpdate;
-        lastUpdate = now;
+        if(!this._paused) {
+            const now = Date.now();
+            this._deltaTime = now - lastUpdate;
+            lastUpdate = now;
 
-        this.__EarlyUpdate__();
-        for(const object of this._gameObjects)
-        {
-            object.Update();
+            this.__EarlyUpdate__();
+            for(const object of this._gameObjects)
+            {
+                object.Update();
+            }
+            this._camera.Update();
+            this.__Update__();
+
+            this.Render();
         }
-        this._camera.Update();
-        this.__Update__();
-
-        this.Render();
+        else
+        {
+            // clear deltaTime
+            lastUpdate = Date.now();
+            this._deltaTime = 0;
+        }
         window.setTimeout(()=>{this.Update()}, 1000 / this._fps);
     }
 
