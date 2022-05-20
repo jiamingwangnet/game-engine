@@ -9,10 +9,6 @@ const canvas = document.querySelector("#c");
 const game = new Game(canvas, 120, "#000000", true);
 
 game.__Load__ = () => {
-    
-}
-
-game.__EarlyLoad__ = () => {
     const player = new Player(100, 500, game, "player");
     game.AddGameObject(player);
 
