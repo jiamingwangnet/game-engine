@@ -2,7 +2,7 @@ import { BoxCollider } from "./classes/Components/BoxCollider.cmp.mjs";
 import { Physics } from "./classes/Components/Physics.cmp.mjs";
 import { Game } from "./classes/Game.mjs";
 import { Block } from "./classes/GameObject/Block.gobj.mjs";
-import { Player } from "./classes/GameObject/Player.gobj.mjs";
+import { Player } from "./Player.gobj.mjs";
 import { Vector } from "./classes/Vector.mjs";
 
 const canvas = document.querySelector("#c");
@@ -13,7 +13,7 @@ game.__Load__ = () => {
 }
 
 game.__EarlyLoad__ = () => {
-    const player = new Player(10, 3, game, "player");
+    const player = new Player(100, 500, game, "player");
     game.AddGameObject(player);
 
     const floor = new Block(-10000, window.innerHeight - 40, 20000, 50, "#096e00", game, "floor");

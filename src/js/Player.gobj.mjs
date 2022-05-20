@@ -1,7 +1,7 @@
-import { GameObject } from "../GameObject.mjs";
-import { Physics } from "../Components/Physics.cmp.mjs";
-import { BoxCollider } from "../Components/BoxCollider.cmp.mjs";
-import { Movement } from "../Components/Movement.cmp.mjs";
+import { GameObject } from "./classes/GameObject.mjs";
+import { Physics } from "./classes/Components/Physics.cmp.mjs";
+import { BoxCollider } from "./classes/Components/BoxCollider.cmp.mjs";
+import { Movement } from "./classes/Components/Movement.cmp.mjs";
 
 export class Player extends GameObject
 {
