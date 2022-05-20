@@ -40,10 +40,10 @@ export class Game
     Load() 
     {
         window.addEventListener("keydown", e => {
-            this.keystrokes[e.key] = true;
+            this.keystrokes[e.key.toLowerCase()] = true;
         })
         window.addEventListener("keyup", e => {
-            this.keystrokes[e.key] = false;
+            this.keystrokes[e.key.toLowerCase()] = false;
         })
 
         this. __EarlyLoad__();
