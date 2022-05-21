@@ -27,17 +27,17 @@ export class Movement extends Component {
     __Update__() {
         const groundCheck = this._holder.GetComponent(BoxCollider).CollideAll();
 
-        if (this._holder._game.keystrokes[this._keybinds.JUMP] && !(Math.abs(this.holder.GetComponent(Physics).baseVelocity.y) > 0) && groundCheck.bottom) {           
+        if (this._holder._game.input.keystrokes[this._keybinds.JUMP] && !(Math.abs(this.holder.GetComponent(Physics).baseVelocity.y) > 0) && groundCheck.bottom) {           
             this._moveVector.y = -1;
         }
         else {
             this._moveVector.y = 0;
         }
 
-        if (this._holder._game.keystrokes[this._keybinds.RIGHT]) {
+        if (this._holder._game.input.keystrokes[this._keybinds.RIGHT]) {
             this._moveVector.x = 1;
         }
-        else if (this._holder._game.keystrokes[this._keybinds.LEFT]) {
+        else if (this._holder._game.input.keystrokes[this._keybinds.LEFT]) {
             this._moveVector.x = -1;
         }
         else {

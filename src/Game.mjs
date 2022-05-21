@@ -1,5 +1,6 @@
 import { Camera } from "./Camera.mjs";
 import { GameObject } from "./GameObject.mjs";
+import { Input } from "./Input.mjs";
 
 let lastUpdate = Date.now();
 
@@ -11,26 +12,25 @@ export class Game
         this._fps = fps;
 
         this._deltaTime = 0;
-        this._keystrokes = {};
 
         this._canvas = canvas;
         this._camera = new Camera(canvas, background);
 
         this._gravity = gravity;
         this._paused = false;
+
+        this._input = new Input(this);
     }
     
     get gameObjects(){return this._gameObjects}
-    get background(){return this._background}
-    set background(background){this._background = background}
     get canvas(){return this._canvas;}
-    get keystrokes(){return this._keystrokes;}
     get deltaTime(){return this._deltaTime;}
     get camera(){return this._camera;}
     get gravity(){return this._gravity;}
     set gravity(gravity){this._gravity = gravity;}
     set paused(paused){this._paused = paused;}
     get paused(){return this._paused;}
+    get input(){return this._input;}
 
     __Load__(){}
     __Update__(){}
@@ -42,12 +42,7 @@ export class Game
 
     Load() 
     {
-        window.addEventListener("keydown", e => {
-            this.keystrokes[e.key.toLowerCase()] = true;
-        })
-        window.addEventListener("keyup", e => {
-            this.keystrokes[e.key.toLowerCase()] = false;
-        })
+        this._input.__Start__();
 
         document.addEventListener("visibilitychange", e => {
             this.paused = document.hidden;
