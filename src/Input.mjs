@@ -37,16 +37,16 @@ export class Input
 
     ScreenToWorldPosition(position)
     {
-        return new Vector(position.x + this._game.camera.position.x, position.y + this._game.camera.position.y);
+        return new Vector(position.x - this._game.camera.position.x, position.y - this._game.camera.position.y);
     }
 
     ButtonToCode(button)
     {
         switch(button)
         {
-            case 0: return "left";
-            case 1: return "middle";
-            case 2: return "right";
+            case "left": return 0;
+            case "middle": return 1;
+            case "right": return 2;
         }
     }
 }
