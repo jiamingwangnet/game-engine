@@ -7,11 +7,11 @@ export class Renderer extends Component
     static Color = Symbol("color");
     static Image = Symbol("image")
 
-    constructor(canvas, width, height, x, y, holder, path=undefined)
+    constructor(canvas, width, height, x, y, holder, imagePath=undefined)
     {
         super(holder);
         this._color = "#00000000";
-        this._path = path;
+        this._imagePath = imagePath;
         this._using = Renderer.Color;
         this._canvas = canvas;
         this._ctx = canvas.getContext("2d");
@@ -25,39 +25,56 @@ export class Renderer extends Component
     }
     get color(){return this._color;}
     set color(color){this._color = color;}
-    get path(){return this._path;}
-    set path(path){this._path = path;}
+    get imagePath(){return this._imagePath;}
+    set imagePath(imagePath){
+        this._imagePath = imagePath;
+        this._UpdateImage();
+    }
+
+    async _UpdateImage()
+    {
+        this._color = null;
+        this._using = Renderer.Image;
+
+        //load the image
+        this._image = await loadImage(this._imagePath);
+    }
 
     async __Start__()
     {
         // check for color and image path
         // path has priority over color
-        if(this._path)
+        if(this._imagePath)
         {
             this._color = null;
             this._using = Renderer.Image;
 
             //load the image
-            this._image = await loadImage(this._path);
+            this._image = await loadImage(this._imagePath);
         }
     }
 
     Render(offsetX, offsetY)
     {
-        if(this._using == Renderer.Color)
-        {
-            
+        if(this._using == Renderer.Color) 
             this._ctx.drawImage(this._drawing, this._position.x + offsetX, this._position.y + offsetY);
-
-        }
-        else if(this.using == Renderer.Image)
-        {
-            this._ctx.drawImage(this._image, this._position.x + offsetX, this._position.y + offsetY);
-        }
+        else if(this._using == Renderer.Image)
+            this._RenderImage(offsetX, offsetY);
         else
-        {
             throw new Error("What the hell??");
+    }
+
+    async _RenderImage(offsetX, offsetY)
+    {
+        if(!this._image)
+        {
+            this._color = null;
+            this._using = Renderer.Image;
+
+            //load the image
+            this._image = await loadImage(this._imagePath);
         }
+        this._ctx.drawImage(this._image, this._position.x + offsetX, this._position.y + offsetY);
     }
 
     __Update__()

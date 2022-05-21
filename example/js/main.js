@@ -42,6 +42,9 @@ game.__Load__ = () => {
     const higherFloor5 = new Block(820, window.innerHeight-220, 50, 50, "teal", game, "higherFloor5")
     game.AddGameObject(higherFloor5);
 
+    const image = new Block(700, window.innerHeight-220, 50, 50, "", game, "image", "./assets/test.png");
+    game.AddGameObject(image);
+
     const roof = new Block(450, window.innerHeight-210, 1000, 10, "brown", game, "roof");
     game.AddGameObject(roof);
 
