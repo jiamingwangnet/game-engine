@@ -4,6 +4,7 @@ import { Game } from "../../src/Game.mjs";
 import { Block } from "../../src/GameObject/Block.gobj.mjs";
 import { Player } from "./Player.gobj.mjs";
 import { Vector } from "../../src/Vector.mjs";
+import { AudioObj } from "../../src/GameObject/AudioObj.gobj.mjs";
 
 const canvas = document.querySelector("#c");
 const game = new Game(canvas, 120, "#000000", true);
@@ -48,6 +49,9 @@ game.__Load__ = () => {
     const roof = new Block(450, window.innerHeight-210, 1000, 10, "brown", game, "roof");
     game.AddGameObject(roof);
 
+    const audio = new AudioObj("./assets/test.wav", "audio", game);
+    game.AddGameObject(audio);
+
     game.camera.follow = player;
 }
 
@@ -57,7 +61,12 @@ game.__Render__ = () => {
 
 game.__Update__ = () => {
     const player = game.GetObject("player");
-    const floor = game.GetObject("floor");
+    const image = game.GetObject("image");
+
+    if(player.GetComponent(BoxCollider).Collide(image.GetComponent(BoxCollider)))
+    {
+        game.GetObject("audio").Play();
+    }
 }
 
 game.MainLoop();

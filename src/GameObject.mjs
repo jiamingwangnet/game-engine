@@ -61,7 +61,7 @@ export class GameObject
     {
         this._started = true;
         this.__EarlyStart__();
-        this._renderer.Start();
+        if(this._renderer)this._renderer.Start();
         for(const cmp of this._components)
         {
             cmp.Start();
@@ -72,14 +72,14 @@ export class GameObject
     Render(offsetX, offsetY)
     {
         this.__EarlyRender__();
-        this._renderer.Render(offsetX, offsetY);
+        if(this._renderer)this._renderer.Render(offsetX, offsetY);
         this.__Render__()
     }
 
     Update()
     {
         this.__EarlyUpdate__();
-        this._renderer.Update();
+        if(this._renderer)this._renderer.Update();
         for(const cmp of this._components)
         {
             cmp.Update();
