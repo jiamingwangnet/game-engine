@@ -63,7 +63,7 @@ game.__Update__ = () => {
     const player = game.GetObject("player");
     const image = game.GetObject("image");
 
-    if(player.GetComponent(BoxCollider).Collide(image.GetComponent(BoxCollider)))
+    if(player.GetComponent(BoxCollider).Collide(image.GetComponent(BoxCollider)).collided)
     {
         game.GetObject("audio").Play();
     }
