@@ -48,8 +48,8 @@ export class Physics extends Component
         }
         this._velocityQueue = [];
 
-        this._holder.x += totalVelocity.x;
-        this._holder.y += totalVelocity.y;
+        this._holder.position.x += totalVelocity.x;
+        this._holder.position.y += totalVelocity.y;
     }
 
     ApplyGravity()

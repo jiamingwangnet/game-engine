@@ -1,3 +1,5 @@
+import { Vector } from "./Vector.mjs";
+
 export class Camera
 {
     constructor(canvas, background, x=0, y=0, follow=null)
@@ -5,16 +7,13 @@ export class Camera
         this._background = background;
         this._canvas = canvas;
         this._ctx = canvas.getContext("2d");
-        this._x = x;
-        this._y = y;
+        this._position = new Vector(x, y);
         this._follow = follow;
     }
-    get x(){return this._x;}
-    set x(x){this._x = x;}
-    get y(){return this._y;}
-    set y(y){this._y = y};
     get follow(){return this._follow;}
     set follow(follow){this._follow = follow;}
+    get position(){return this._position;}
+    set position(position){this._position = position;}
 
     Render(renderList)
     {
@@ -25,7 +24,7 @@ export class Camera
         
         for(const object of renderList)
         {
-            object.Render(this._x, this._y);
+            object.Render(this._position.x, this._position.y);
         }
     }
 
@@ -33,8 +32,8 @@ export class Camera
     {
         if(this._follow)
         {
-            this.x = -this._follow.x + this._canvas.width / 2;
-            this.y = -this._follow.y + this._canvas.height / 2;
+            this._position.x = -this._follow.position.x + this._canvas.width / 2;
+            this._position.y = -this._follow.position.y + this._canvas.height / 2;
         }
     }
 }

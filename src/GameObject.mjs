@@ -1,12 +1,12 @@
 import { Component } from "./Component.mjs";
 import { Renderer } from "./Components/Renderer.cmp.mjs";
+import { Vector } from "./Vector.mjs";
 
 export class GameObject
 {
     constructor(x, y, width, height, game, name)
     {
-        this._x = x;
-        this._y = y;
+        this._position = new Vector(x, y);
         this._width = width;
         this._height = height;
         this._components = [];
@@ -18,12 +18,8 @@ export class GameObject
 
     get width(){return this._width;}
     get height(){return this._height;}
-    get x(){return this._x;}
-    get y(){return this._y;}
     set width(width){this._width = width;}
     set height(height){this._height = height;}
-    set x(x){this._x = x;}
-    set y(y){this._y = y;}
     get components(){return this._components;}
     set components(component)
     {
@@ -34,6 +30,8 @@ export class GameObject
     get renderer(){return this._renderer;}
     get name(){return this._name;}
     get started(){return this._started;}
+    get position(){return this._position;}
+    set position(position){this._position = position;}
 
     __Start__(){}
     __Update__(){}

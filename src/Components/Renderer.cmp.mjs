@@ -1,5 +1,6 @@
 import { Component } from "../Component.mjs";
 import { IndexOutOfRangeException } from "../Exceptions/IndexOutOfRangeException.exc.js";
+import { Vector } from "../Vector.mjs";
 
 export class Renderer extends Component
 {
@@ -16,8 +17,7 @@ export class Renderer extends Component
         this._ctx = canvas.getContext("2d");
         this._height = height;
         this._width = width;
-        this._x = x;
-        this._y = y;
+        this._position = new Vector(x, y);
         this._image;
         this._drawing = document.createElement("canvas");
         this._drawing.width = width;
@@ -47,12 +47,12 @@ export class Renderer extends Component
         if(this._using == Renderer.Color)
         {
             
-            this._ctx.drawImage(this._drawing, this._x + offsetX, this._y + offsetY);
+            this._ctx.drawImage(this._drawing, this._position.x + offsetX, this._position.y + offsetY);
 
         }
         else if(this.using == Renderer.Image)
         {
-            this._ctx.drawImage(this._image, this._x + offsetX, this._y + offsetY);
+            this._ctx.drawImage(this._image, this._position.x + offsetX, this._position.y + offsetY);
         }
         else
         {
@@ -62,8 +62,8 @@ export class Renderer extends Component
 
     __Update__()
     {
-        this._x = this._holder.x;
-        this._y = this._holder.y;
+        this._position.x = this._holder.position.x;
+        this._position.y = this._holder.position.y;
     }
 
     SetPixel(color, x, y)
