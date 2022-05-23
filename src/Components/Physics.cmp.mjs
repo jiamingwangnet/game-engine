@@ -9,7 +9,7 @@ export class Physics extends Component
         this._gravity = 9.51;
         this._velocity = new Vector(0,0); // the velocity added by the physics component
         this._velocityQueue = [];
-        this._terminalVelocity = terminalVelocity;
+        this._terminalVelocitySqr = terminalVelocity*terminalVelocity;
         this._mass = mass;
         this._drag = drag;
         this._game = game;
@@ -33,7 +33,7 @@ export class Physics extends Component
     __Start__()
     {
         // calculate terminal velocity
-        this._terminalVelocity = Math.sqrt( (2 * this._mass * this._gravity) / (1.225 * (this._holder.width * this._holder.height) * this._drag) );
+        this._terminalVelocitySqr = (2 * this._mass * this._gravity) / (1.225 * (this._holder.width * this._holder.height) * this._drag);
     }
 
     __Update__()
@@ -54,10 +54,10 @@ export class Physics extends Component
 
     ApplyGravity()
     {
-        if(this._velocity.y < this._terminalVelocity)
+        if(this._velocity.y*this._velocity.y < this._terminalVelocity)
             this._velocity.y += this._gravity/60;
         else
-            this._velocity.y = this._terminalVelocity;
+            this._velocity.y = Math.sqrt(this._terminalVelocity);
     }
 
     AddVelocity(x, y)
