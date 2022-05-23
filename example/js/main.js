@@ -80,19 +80,25 @@ game.__Update__ = () => {
         }
     }
 
-    if(game.input.buttonDown[game.input.ButtonToCode("right")])
-    {
-        const x = Math.floor(Math.random() * 300);
-        const y = Math.floor(Math.random() * 300);
-        const w = Math.floor(Math.random() * 20) + 10;
-        const h = Math.floor(Math.random() * 20) + 10;
+    const rightdown = game.input.buttonDown[game.input.ButtonToCode("right")];
+    if (rightdown) {
+        if (rightdown.clicked) {
+            const x = Math.floor(Math.random() * 300);
+            const y = Math.floor(Math.random() * 300);
+            const w = Math.floor(Math.random() * 20) + 10;
+            const h = Math.floor(Math.random() * 20) + 10;
 
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
 
-        const block = new Block(x + player.position.x + 100, y + player.position.y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
-        game.AddGameObject(block);
+            const block = new Block(x + player.position.x + 100, y + player.position.y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
+            game.AddGameObject(block);
+        }
+    }
+
+    if (game.input.buttonDown[game.input.ButtonToCode("middle")]) {
+
     }
 }
 
