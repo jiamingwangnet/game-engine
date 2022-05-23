@@ -21,6 +21,7 @@ export class Game
 
         this._requiredFramerate = 1000/fps;
         this._lag = 0;
+        this._deltaTime = 0;
     }
     
     get gameObjects(){return this._gameObjects}
@@ -69,13 +70,15 @@ export class Game
 
     Update()
     {
-        window.requestAnimationFrame(()=>{this.Update()});
         if(!this._paused) {
+            window.requestAnimationFrame(()=>{this.Update()});
+
             const current = Date.now(),
                 elapsed = current - lastUpdate;
             lastUpdate = current;
 
             this._lag += elapsed;
+            this._deltaTime = elapsed;
 
             while(this._lag >= this._requiredFramerate)
             {
@@ -92,12 +95,6 @@ export class Game
 
             const lagOffset = this._lag / this._requiredFramerate;
             this.Render(lagOffset);
-        }
-        else
-        {
-            // clear deltaTime
-            lastUpdate = Date.now();
-            this._deltaTime = 0;
         }
     }
 
