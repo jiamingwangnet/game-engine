@@ -89,7 +89,7 @@ export class Game
             lastUpdate = Date.now();
             this._deltaTime = 0;
         }
-        window.setTimeout(()=>{this.Update()}, 1000 / this._fps);
+        window.requestAnimationFrame(()=>{this.Update()});
     }
 
     MainLoop()
