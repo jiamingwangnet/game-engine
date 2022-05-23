@@ -70,7 +70,7 @@ export class Game
     {
         if(!this._paused) {
             const now = Date.now();
-            this._deltaTime = now - lastUpdate;
+            this._deltaTime = (now - lastUpdate) / (1000 / this._fps);
             lastUpdate = now;
 
             this.__EarlyUpdate__();
