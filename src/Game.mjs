@@ -12,7 +12,7 @@ export class Game
         this._fps = fps;
 
         this._canvas = canvas;
-        this._camera = new Camera(canvas, background);
+        this._camera = new Camera(canvas, background, this);
 
         this._gravity = gravity;
         this._paused = false;
@@ -85,7 +85,8 @@ export class Game
                 this.__EarlyUpdate__();
                 for(const object of this._gameObjects)
                 {
-                    object.Update();
+                    if(this.IsInFrame(object))
+                        object.Update();
                 }
                 this._camera.Update();
                 this.__Update__();
@@ -146,5 +147,21 @@ export class Game
         }
 
         return null;
+    }
+
+    IsInFrame(object)
+    {
+        const canvasRect = {
+            x: -this._camera.position.x,
+            y: -this._camera.position.y,
+            width: this._canvas.width,
+            height: this._canvas.height
+        }
+        const objPos = object.position;
+        
+        return objPos.x < canvasRect.x + canvasRect.width &&
+        objPos.x + object.width > canvasRect.x &&
+        objPos.y < canvasRect.y + canvasRect.height &&
+        object.height + objPos.y > canvasRect.y;
     }
 }

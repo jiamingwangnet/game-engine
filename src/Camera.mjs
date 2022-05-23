@@ -2,13 +2,14 @@ import { Vector } from "./Vector.mjs";
 
 export class Camera
 {
-    constructor(canvas, background, x=0, y=0, follow=null)
+    constructor(canvas, background, game, x=0, y=0, follow=null)
     {
         this._background = background;
         this._canvas = canvas;
         this._ctx = canvas.getContext("2d");
         this._position = new Vector(x, y);
         this._follow = follow;
+        this._game = game;
     }
     get follow(){return this._follow;}
     set follow(follow){this._follow = follow;}
@@ -24,7 +25,10 @@ export class Camera
         
         for(const object of renderList)
         {
-            object.Render(this._position.x, this._position.y, lagOffset);
+            if(this._game.IsInFrame(object))
+            {
+                object.Render(this._position.x, this._position.y, lagOffset);
+            }
         }
     }
 
