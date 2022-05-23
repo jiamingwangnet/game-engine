@@ -11,8 +11,6 @@ export class Game
         this._gameObjects = [];
         this._fps = fps;
 
-        this._deltaTime = 0;
-
         this._canvas = canvas;
         this._camera = new Camera(canvas, background);
 
@@ -20,6 +18,9 @@ export class Game
         this._paused = false;
 
         this._input = new Input(this);
+
+        this._requiredFramerate = 1000/fps;
+        this._lag = 0;
     }
     
     get gameObjects(){return this._gameObjects}
@@ -59,29 +60,38 @@ export class Game
         this.__Load__();
     }
 
-    Render() 
+    Render(lagOffset) 
     {      
         this.__EarlyRender__();
-        this._camera.Render(this._gameObjects);
+        this._camera.Render(this._gameObjects, lagOffset);
         this.__Render__();
     }
 
     Update()
     {
+        window.requestAnimationFrame(()=>{this.Update()});
         if(!this._paused) {
-            const now = Date.now();
-            this._deltaTime = (now - lastUpdate) / (1000 / this._fps);
-            lastUpdate = now;
+            const current = Date.now(),
+                elapsed = current - lastUpdate;
+            lastUpdate = current;
 
-            this.__EarlyUpdate__();
-            for(const object of this._gameObjects)
+            this._lag += elapsed;
+
+            while(this._lag >= this._requiredFramerate)
             {
-                object.Update();
-            }
-            this._camera.Update();
-            this.__Update__();
+                this.__EarlyUpdate__();
+                for(const object of this._gameObjects)
+                {
+                    object.Update();
+                }
+                this._camera.Update();
+                this.__Update__();
 
-            this.Render();
+                this._lag -= this._requiredFramerate;
+            }
+
+            const lagOffset = this._lag / this._requiredFramerate;
+            this.Render(lagOffset);
         }
         else
         {
@@ -89,13 +99,12 @@ export class Game
             lastUpdate = Date.now();
             this._deltaTime = 0;
         }
-        window.requestAnimationFrame(()=>{this.Update()});
     }
 
     MainLoop()
     {
         this.Load();
-        this.Update();
+        window.requestAnimationFrame(()=>{this.Update()});
     }
 
     AddGameObject(gameObject)

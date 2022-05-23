@@ -22,6 +22,8 @@ export class Renderer extends Component
         this._drawing = document.createElement("canvas");
         this._drawing.width = width;
         this._drawing.height = height;
+        this._oldPos = new Vector(x, y);
+        this._interpolate = false;
     }
     get color(){return this._color;}
     set color(color){this._color = color;}
@@ -54,17 +56,22 @@ export class Renderer extends Component
         }
     }
 
-    Render(offsetX, offsetY)
+    Render(offsetX, offsetY, lagOffset)
     {
+        const renderPos = this._interpolate ? new Vector( (this._position.x - this._oldPos.x) * lagOffset + this._oldPos.x, (this._position.y - this._oldPos.y) * lagOffset + this._oldPos.y ) :
+                            this._position;
+
         if(this._using == Renderer.Color) 
-            this._ctx.drawImage(this._drawing, this._position.x + offsetX, this._position.y + offsetY);
+            this._ctx.drawImage(this._drawing, renderPos.x + offsetX, renderPos.y + offsetY);
         else if(this._using == Renderer.Image)
-            this._RenderImage(offsetX, offsetY);
+            this._RenderImage(offsetX, offsetY, lagOffset);
         else
             throw new Error("What the hell??");
+
+        this._oldPos = new Vector(this._position.x, this._position.y);
     }
 
-    async _RenderImage(offsetX, offsetY)
+    async _RenderImage(offsetX, offsetY, lagOffset)
     {
         if(!this._image)
         {
@@ -74,7 +81,9 @@ export class Renderer extends Component
             //load the image
             this._image = await loadImage(this._imagePath);
         }
-        this._ctx.drawImage(this._image, this._position.x + offsetX, this._position.y + offsetY);
+        const renderPos = this._interpolate ? new Vector( (this._position.x - this._oldPos.x) * lagOffset + this._oldPos.x, (this._position.y - this._oldPos.y) * lagOffset + this._oldPos.y ) :
+        this._position;
+        this._ctx.drawImage(this._image, renderPos.x + offsetX, renderPos.y + offsetY);
     }
 
     __Update__()

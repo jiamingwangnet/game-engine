@@ -69,10 +69,10 @@ export class GameObject
         this.__Start__();
     }
 
-    Render(offsetX, offsetY)
+    Render(offsetX, offsetY, lagOffset)
     {
         this.__EarlyRender__();
-        if(this._renderer)this._renderer.Render(offsetX, offsetY);
+        if(this._renderer)this._renderer.Render(offsetX, offsetY, lagOffset);
         this.__Render__()
     }
 

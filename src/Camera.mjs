@@ -15,7 +15,7 @@ export class Camera
     get position(){return this._position;}
     set position(position){this._position = position;}
 
-    Render(renderList)
+    Render(renderList, lagOffset)
     {
         this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
@@ -24,7 +24,7 @@ export class Camera
         
         for(const object of renderList)
         {
-            object.Render(this._position.x, this._position.y);
+            object.Render(this._position.x, this._position.y, lagOffset);
         }
     }
 
