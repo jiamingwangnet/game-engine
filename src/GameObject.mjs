@@ -9,7 +9,7 @@ export class GameObject
         this._position = new Vector(x, y);
         this._width = width;
         this._height = height;
-        this._components = [];
+        this._components = {};
         this._renderer = new Renderer(game.canvas, width, height, x, y, this);
         this._game = game;
         this._name = name;
@@ -43,17 +43,12 @@ export class GameObject
 
     GetComponent(type)
     {
-        for(const cmp of this._components)
-        {
-            if(cmp instanceof type)
-                return cmp;
-        }
-        return null;
+        return this._components[type.name];
     }
 
     AddComponent(cmp)
     {
-        this._components.push(cmp);
+        this._components[cmp.constructor.name] = cmp;
         return cmp;
     }
 
@@ -62,8 +57,9 @@ export class GameObject
         this._started = true;
         this.__EarlyStart__();
         if(this._renderer)this._renderer.Start();
-        for(const cmp of this._components)
+        for(const key in this._components)
         {
+            const cmp = this._components[key];
             cmp.Start();
         }
         this.__Start__();
@@ -80,8 +76,9 @@ export class GameObject
     {
         this.__EarlyUpdate__();
         if(this._renderer)this._renderer.Update();
-        for(const cmp of this._components)
+        for(const key in this._components)
         {
+            const cmp = this._components[key];
             cmp.Update();
         }
         this.__Update__();
