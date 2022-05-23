@@ -60,13 +60,17 @@ export class Renderer extends Component
     {
         const renderPos = this._interpolate ? new Vector( (this._position.x - this._oldPos.x) * lagOffset + this._oldPos.x, (this._position.y - this._oldPos.y) * lagOffset + this._oldPos.y ) :
                             this._position;
-
-        if(this._using == Renderer.Color) 
-            this._ctx.drawImage(this._drawing, renderPos.x + offsetX, renderPos.y + offsetY);
-        else if(this._using == Renderer.Image)
-            this._RenderImage(offsetX, offsetY, lagOffset);
-        else
-            throw new Error("What the hell??");
+        switch(this._using)
+        {
+            case Renderer.Color:
+                this._ctx.drawImage(this._drawing, renderPos.x + offsetX, renderPos.y + offsetY);
+                break;
+            case Renderer.Image:
+                this._RenderImage(offsetX, offsetY, lagOffset);
+                break;
+            default:
+                throw new Error("What the hell??");
+        }
 
         this._oldPos = new Vector(this._position.x, this._position.y);
     }
