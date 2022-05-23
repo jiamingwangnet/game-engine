@@ -4,13 +4,14 @@ import { Physics } from "./Physics.cmp.mjs";
 
 export class BoxCollider extends Component
 {
-    constructor(width, height, holder, game, xOffset=0,yOffset=0)
+    constructor(width, height, holder, game, physics=null, xOffset=0,yOffset=0)
     {
         super(holder);
         this._width = width;
         this._height = height;
         this._offset = new Vector(xOffset,yOffset);
         this._game = game;
+        this._physics = physics;
     }
 
     __Start__()
@@ -28,10 +29,8 @@ export class BoxCollider extends Component
             {
                 const collisionRect = this._Collide(collider);
                 const hasCollided = collisionRect.collided;
-                
-                const physics = this.holder.GetComponent(Physics);
 
-                if(hasCollided && physics)
+                if(hasCollided && this._physics)
                 {
                     const colliderHolder = collider.holder;
 
@@ -44,25 +43,25 @@ export class BoxCollider extends Component
 
                     if(collisionRect["left"] && (clipDistances.left < clipDistances.top && clipDistances.left < clipDistances.bottom))
                     {
-                        physics.baseVelocity.x = 0;
+                        this._physics.baseVelocity.x = 0;
                         this.holder.position.x = collider.holder.position.x + collider.holder.width;
                     }
 
                     if(collisionRect["right"] && (clipDistances.right < clipDistances.top && clipDistances.right < clipDistances.bottom))
                     {
-                        physics.baseVelocity.x = 0;
+                        this._physics.baseVelocity.x = 0;
                         this.holder.position.x = collider.holder.position.x - this.holder.width;
                     }
 
                     if(collisionRect["bottom"] && (clipDistances.bottom < clipDistances.left && clipDistances.bottom < clipDistances.right))
                     {
-                        physics.baseVelocity.y = 0;
+                        this._physics.baseVelocity.y = 0;
                         this.holder.position.y = collider.holder.position.y - this.holder.height;
                     }
 
                     if(collisionRect["top"] && (clipDistances.top < clipDistances.left && clipDistances.top < clipDistances.right))
                     {
-                        physics.baseVelocity.y = 0;
+                        this._physics.baseVelocity.y = 0;
                         this.holder.position.y = collider.holder.position.y + collider.holder.height;
                     }
                 }
