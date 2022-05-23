@@ -13,6 +13,7 @@ export class Input
 
     __Start__()
     {
+        document.body.addEventListener("contextmenu", e=>{e.preventDefault();e.stopImmediatePropagation();e.stopPropagation();});
         window.addEventListener("keydown", e => {
             this._keystrokes[e.key.toLowerCase()] = true;
         })
