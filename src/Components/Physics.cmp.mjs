@@ -55,7 +55,7 @@ export class Physics extends Component
     ApplyGravity()
     {
         if(this._velocity.y < this._terminalVelocity)
-            this._velocity.y += this._gravity/60 * this._game.deltaTime / 10;
+            this._velocity.y += this._gravity * 100 /60 * (this._game.deltaTime / 1000);
         else
             this._velocity.y = this._terminalVelocity;
     }

@@ -18,10 +18,10 @@ export class Movement extends Component {
 
     _Move(vector)
     {
-        const movementX = new Vector(vector.x * this._speed, 0);
+        const movementX = new Vector(vector.x * this._speed * 100 * (this._holder._game.deltaTime / 1000), 0);
         this.holder.GetComponent(Physics).QueueVelocity(movementX); // walking is instantaneous force
 
-        this.holder.GetComponent(Physics).baseVelocity.Add(new Vector(0, vector.y * this._jump)); // jump is added as a continuous force
+        this.holder.GetComponent(Physics).baseVelocity.Add(new Vector(0, vector.y * this._jump * 100 * (this._holder._game.deltaTime / 1000) )); // jump is added as a continuous force
     }
 
     __Update__() {
