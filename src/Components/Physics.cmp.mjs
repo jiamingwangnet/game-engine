@@ -54,7 +54,7 @@ export class Physics extends Component
 
     ApplyGravity()
     {
-        if(this._velocity.y*this._velocity.y < this._terminalVelocity)
+        if(this._velocity.y*this._velocity.y < this._terminalVelocitySqr)
             this._velocity.y += this._gravity/60;
         else
             this._velocity.y = Math.sqrt(this._terminalVelocity);
