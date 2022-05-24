@@ -159,9 +159,9 @@ export class Game
         }
         const objPos = object.position;
         
-        return objPos.x < canvasRect.x + canvasRect.width &&
-        objPos.x + object.width > canvasRect.x &&
-        objPos.y < canvasRect.y + canvasRect.height &&
-        object.height + objPos.y > canvasRect.y;
+        return objPos.x < canvasRect.x + canvasRect.width + 100 &&
+        objPos.x + object.width > canvasRect.x - 100 &&
+        objPos.y < canvasRect.y + canvasRect.height + 100 &&
+        object.height + objPos.y > canvasRect.y - 100;
     }
 }
