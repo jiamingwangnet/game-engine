@@ -14,6 +14,7 @@ export class GameObject
         this._game = game;
         this._name = name;
         this._started = false;
+        this._lastUpdated = Date.now();
     }
 
     get width(){return this._width;}
@@ -74,6 +75,7 @@ export class GameObject
 
     Update()
     {
+        this._lastUpdated = Date.now();
         this.__EarlyUpdate__();
         if(this._renderer)this._renderer.Update();
         for(const key in this._components)
