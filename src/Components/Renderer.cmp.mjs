@@ -69,7 +69,7 @@ export class Renderer extends Component
                 this._RenderImage(offsetX, offsetY, lagOffset);
                 break;
             default:
-                throw new Error("What the hell??");
+                throw new Error("Renderer mode is not valid type");
         }
 
         this._oldPos = new Vector(this._position.x, this._position.y);
