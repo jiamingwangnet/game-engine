@@ -113,6 +113,22 @@ game.__Update__ = () => {
             middleclicked = false;
         }
     }
+
+    if(game.input.keystrokes["f"])
+    {
+        const x = Math.floor(Math.random() * 300);
+        const y = Math.floor(Math.random() * 300);
+        const w = Math.floor(Math.random() * 20) + 10;
+        const h = Math.floor(Math.random() * 20) + 10;
+
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+
+        const block = new Block(game.input.ScreenToWorldPosition(rightdown.position).x + x, game.input.ScreenToWorldPosition(rightdown.position).y + y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
+        block.AddComponent(new Physics(block, game));
+        game.AddGameObject(block);
+    }
 }
 
 game.MainLoop();
