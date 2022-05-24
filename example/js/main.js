@@ -93,7 +93,7 @@ game.__Update__ = () => {
             const g = Math.floor(Math.random() * 256);
             const b = Math.floor(Math.random() * 256);
 
-            const block = new Block(x + player.position.x + 300, y + player.position.y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
+            const block = new Block(game.input.ScreenToWorldPosition(rightdown.position).x + x, game.input.ScreenToWorldPosition(rightdown.position).y + y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
             game.AddGameObject(block);
         }
     }
