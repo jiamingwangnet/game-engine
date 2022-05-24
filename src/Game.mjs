@@ -47,6 +47,10 @@ export class Game
         this._input.__Start__();
 
         document.addEventListener("visibilitychange", e => {
+            if(document.hidden)
+            {
+                lastUpdate = Date.now();
+            }
             this.paused = document.hidden;
         });
 
