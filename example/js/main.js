@@ -108,7 +108,7 @@ game.__Update__ = () => {
         if(middleclicked && !middledown.clicked)
         {
             const physicsBlock = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x, game.input.ScreenToWorldPosition(game.input.mousePosition).y, 30, 30, "#00ff00", game, "block");
-            physicsBlock.AddComponent(new Physics(physicsBlock, game));
+            physicsBlock.AddComponent(new Physics(physicsBlock, game, 0.8));
             game.AddGameObject(physicsBlock);
             middleclicked = false;
         }
@@ -126,7 +126,7 @@ game.__Update__ = () => {
         const b = Math.floor(Math.random() * 256);
 
         const block = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x + x, game.input.ScreenToWorldPosition(game.input.mousePosition).y + y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
-        block.AddComponent(new Physics(block, game));
+        block.AddComponent(new Physics(block, game, 0.48));
         game.AddGameObject(block);
     }
 }

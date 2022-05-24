@@ -1,9 +1,10 @@
 import { Component } from "../Component.mjs";
 import { Vector } from "../Vector.mjs";
+import { BoxCollider } from "./BoxCollider.cmp.mjs";
 
 export class Physics extends Component
 {
-    constructor(holder, game, mass=1, drag=0.00001, terminalVelocity=Infinity)
+    constructor(holder, game, mass=1, pushable=true, drag=0.00001, terminalVelocity=Infinity)
     {
         super(holder);
         this._gravity = 9.51;
@@ -13,6 +14,9 @@ export class Physics extends Component
         this._mass = mass;
         this._drag = drag;
         this._game = game;
+        this._lastQueue = [];
+        this._moveFactor = 0.5;
+        this._pushable = pushable;
     }
 
     get gravity(){return this._gravity;}
@@ -29,6 +33,8 @@ export class Physics extends Component
         return totalVelocity;
     }
     get baseVelocity(){return this._velocity;}
+    get mass(){return this._mass;}
+    get pushable(){return this._pushable;}
 
     __Start__()
     {
@@ -46,6 +52,7 @@ export class Physics extends Component
         {
             totalVelocity.Add(vel);
         }
+        this._lastQueue = this._velocityQueue;
         this._velocityQueue = [];
 
         this._holder.position.x += totalVelocity.x;
@@ -58,6 +65,12 @@ export class Physics extends Component
             this._velocity.y += this._gravity/60;
         else
             this._velocity.y = Math.sqrt(this._terminalVelocity);
+    }
+
+    Push(objectPhysics)
+    {
+        if(objectPhysics.pushable)
+            objectPhysics.QueueVelocity(new Vector(this._lastQueue[0] ? this._lastQueue[0].x * this. _moveFactor / objectPhysics.mass : 0, 0));
     }
 
     AddVelocity(x, y)

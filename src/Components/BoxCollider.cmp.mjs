@@ -12,6 +12,8 @@ export class BoxCollider extends Component {
         this._physics = physics;
     }
 
+    get physics(){return this._physics;}
+
     __Start__() {
 
     }
@@ -38,12 +40,18 @@ export class BoxCollider extends Component {
                 }
 
                 if (collisionRect["left"] && (clipDistances.left < clipDistances.top && clipDistances.left < clipDistances.bottom)) {
-                    this._physics.baseVelocity.x = 0;
+                    if(collider.physics)
+                        this.physics.Push(collider.physics);
+                    else
+                        this._physics.baseVelocity.x = 0;
                     this.holder.position.x = collider.holder.position.x + collider.holder.width;
                 }
 
                 if (collisionRect["right"] && (clipDistances.right < clipDistances.top && clipDistances.right < clipDistances.bottom)) {
-                    this._physics.baseVelocity.x = 0;
+                    if(collider.physics)
+                        this.physics.Push(collider.physics);
+                    else
+                        this._physics.baseVelocity.x = 0;
                     this.holder.position.x = collider.holder.position.x - this.holder.width;
                 }
 
