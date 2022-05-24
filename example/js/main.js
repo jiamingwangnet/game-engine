@@ -59,6 +59,7 @@ game.__Render__ = () => {
 
 }
 let leftclicked = false;
+let middleclicked = false;
 game.__Update__ = () => {
     const player = game.GetObject("player");
     const image = game.GetObject("image");
@@ -92,13 +93,25 @@ game.__Update__ = () => {
             const g = Math.floor(Math.random() * 256);
             const b = Math.floor(Math.random() * 256);
 
-            const block = new Block(x + player.position.x + 100, y + player.position.y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
+            const block = new Block(x + player.position.x + 300, y + player.position.y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
             game.AddGameObject(block);
         }
     }
 
-    if (game.input.buttonDown[game.input.ButtonToCode("middle")]) {
+    const middledown = game.input.buttonDown[game.input.ButtonToCode("middle")];
+    if (middledown) {
+        if(middledown.clicked)
+        {
+            middleclicked = true;
+        }
 
+        if(middleclicked && !middledown.clicked)
+        {
+            const physicsBlock = new Block(game.input.ScreenToWorldPosition(middledown.position).x, game.input.ScreenToWorldPosition(middledown.position).y, 30, 30, "#00ff00", game, "block");
+            physicsBlock.AddComponent(new Physics(physicsBlock, game));
+            game.AddGameObject(physicsBlock);
+            middleclicked = false;
+        }
     }
 }
 
