@@ -75,7 +75,7 @@ game.__Update__ = () => {
         }
 
         if (leftclicked && !leftDown.clicked) {
-            const block = new Block(game.input.ScreenToWorldPosition(leftDown.position).x, game.input.ScreenToWorldPosition(leftDown.position).y, 10, 10, "red", game, "block");
+            const block = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x, game.input.ScreenToWorldPosition(game.input.mousePosition).y, 10, 10, "red", game, "block");
             game.AddGameObject(block);
             leftclicked = false;
         }
@@ -93,7 +93,7 @@ game.__Update__ = () => {
             const g = Math.floor(Math.random() * 256);
             const b = Math.floor(Math.random() * 256);
 
-            const block = new Block(game.input.ScreenToWorldPosition(rightdown.position).x + x, game.input.ScreenToWorldPosition(rightdown.position).y + y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
+            const block = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x + x, game.input.ScreenToWorldPosition(game.input.mousePosition).y + y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
             game.AddGameObject(block);
         }
     }
@@ -107,7 +107,7 @@ game.__Update__ = () => {
 
         if(middleclicked && !middledown.clicked)
         {
-            const physicsBlock = new Block(game.input.ScreenToWorldPosition(middledown.position).x, game.input.ScreenToWorldPosition(middledown.position).y, 30, 30, "#00ff00", game, "block");
+            const physicsBlock = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x, game.input.ScreenToWorldPosition(game.input.mousePosition).y, 30, 30, "#00ff00", game, "block");
             physicsBlock.AddComponent(new Physics(physicsBlock, game));
             game.AddGameObject(physicsBlock);
             middleclicked = false;
@@ -125,7 +125,7 @@ game.__Update__ = () => {
         const g = Math.floor(Math.random() * 256);
         const b = Math.floor(Math.random() * 256);
 
-        const block = new Block(game.input.ScreenToWorldPosition(rightdown.position).x + x, game.input.ScreenToWorldPosition(rightdown.position).y + y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
+        const block = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x + x, game.input.ScreenToWorldPosition(game.input.mousePosition).y + y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
         block.AddComponent(new Physics(block, game));
         game.AddGameObject(block);
     }

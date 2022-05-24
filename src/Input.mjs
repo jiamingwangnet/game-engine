@@ -7,9 +7,11 @@ export class Input
         this._keystrokes = {};
         this._buttonDown = {};
         this._game = game;
+        this._mousePosition = new Vector(0, 0);
     }
     get buttonDown(){return this._buttonDown;}
     get keystrokes(){return this._keystrokes;}
+    get mousePosition(){return this._mousePosition;}
 
     __Start__()
     {
@@ -19,6 +21,9 @@ export class Input
         })
         window.addEventListener("keyup", e => {
             this._keystrokes[e.key.toLowerCase()] = false;
+        })
+        window.addEventListener("mousemove", e => {
+            this._mousePosition = new Vector(e.clientX, e.clientY);
         })
         window.addEventListener("mousedown", e => {
             const params = {
