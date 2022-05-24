@@ -25,7 +25,7 @@ export class Camera
         
         for(const object of renderList)
         {
-            if(this._game.IsInFrame(object))
+            if(this._game.IsInFrameX(object))
             {
                 object.Render(this._position.x, this._position.y, lagOffset);
             }

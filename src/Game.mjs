@@ -85,7 +85,7 @@ export class Game
                 this.__EarlyUpdate__();
                 for(const object of this._gameObjects)
                 {
-                    if(this.IsInFrame(object))
+                    if(this.IsInFrameX(object))
                         object.Update();
                 }
                 this._camera.Update();
@@ -163,5 +163,19 @@ export class Game
         objPos.x + object.width > canvasRect.x - 100 &&
         objPos.y < canvasRect.y + canvasRect.height + 100 &&
         object.height + objPos.y > canvasRect.y - 100;
+    }
+
+    IsInFrameX(object)
+    {
+        const canvasRect = {
+            x: -this._camera.position.x,
+            y: -this._camera.position.y,
+            width: this._canvas.width,
+            height: this._canvas.height
+        }
+        const objPos = object.position;
+        
+        return objPos.x < canvasRect.x + canvasRect.width + 100 &&
+        objPos.x + object.width > canvasRect.x - 100;
     }
 }
