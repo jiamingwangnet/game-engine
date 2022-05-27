@@ -307,12 +307,11 @@ export class Game
      * Removes the specified gameObject
      * @param {GameObject} gameObject - The gameobject to remove
      * @memberof Game
-     * @deprecated
      * @example
      * game.RemoveGameObject(player);
      * game.RemoveGameObject(game.GetObject("player"));
      */
-    RemoveGameObject(gameObject) // TODO: rewrite this, it's ugly and confusing to use
+    RemoveGameObject(gameObject)
     {
         if(gameObject instanceof GameObject)
         {
