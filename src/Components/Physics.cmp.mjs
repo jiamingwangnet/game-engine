@@ -27,7 +27,7 @@ export class Physics extends Component
     constructor(holder, game, mass=1, pushable=true, drag=0.00001, terminalVelocity=Infinity)
     {
         super(holder);
-        this._gravity = 9.51;
+        this._gravity = 9.807;
         this._velocity = new Vector(0,0); // the velocity added by the physics component
         this._velocityQueue = [];
         this._terminalVelocitySqr = terminalVelocity*terminalVelocity;
@@ -126,6 +126,7 @@ export class Physics extends Component
      */
     __Update__()
     {
+        const currentDelta = this._game.deltaTime;
         if(this._game.useGravity) this.ApplyGravity();
         let totalVelocity = new Vector(0,0); // the total velocity of the object including the queue
 
@@ -138,8 +139,8 @@ export class Physics extends Component
         this._velocityQueue = [];
 
         // applies the velocity to the object
-        this._holder.position.x += totalVelocity.x;
-        this._holder.position.y += totalVelocity.y;
+        this._holder.position.x += totalVelocity.x * (this._game.framerateIndependent ? currentDelta : 1);
+        this._holder.position.y += totalVelocity.y * (this._game.framerateIndependent ? currentDelta : 1);
     }
 
     /**

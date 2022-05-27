@@ -40,6 +40,8 @@ export class Game
         this._requiredFramerate = 1000/fps; // the desired framerate in ms
         this._lag = 0; // the lag between frames
         this._deltaTime = 0; // the time between frames
+
+        this._framerateIndependent = false; // whether or not the update framerate is independent from the framerate
     }
     
     //#region getters and setters
@@ -47,10 +49,19 @@ export class Game
      * The game framerate
      * @memberof Game
      * @type {number}
+     * @readonly
      * @example
      * console.log(game.fps);
      */
     get fps(){return this._fps;}
+
+    /**
+     * whether or not the update framerate is independent from the framerate
+     * @memberof Game
+     * @type {boolean}
+     * @readonly
+     */
+    get framerateIndependent(){return this._framerateIndependent;}
     /**
      * The list of gameobjects.
      * @memberof Game
@@ -222,7 +233,7 @@ export class Game
             lastUpdate = current;
 
             this._lag += elapsed;
-            this._deltaTime = elapsed;
+            this._deltaTime = elapsed / this._fps;
 
             // keep updating the gameObjects until the game catches up with the desired framerate
             while(this._lag >= this._requiredFramerate)

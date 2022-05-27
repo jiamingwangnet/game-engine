@@ -19,7 +19,7 @@ export class Player extends GameObject
         
         this.AddComponent(new Physics(this, this._game));
         this.AddComponent(new BoxCollider(this.width, this.height, this, this._game, this.GetComponent(Physics)));
-        this.AddComponent(new Movement(this, 5, 7));
+        this.AddComponent(new Movement(this, 5, 5.5));
     }
 
     __Render__()
