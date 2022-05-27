@@ -126,7 +126,7 @@ export class Physics extends Component
      */
     __Update__()
     {
-        if(this._game.gravity) this.ApplyGravity();
+        if(this._game.useGravity) this.ApplyGravity();
         let totalVelocity = new Vector(0,0); // the total velocity of the object including the queue
 
         totalVelocity.Add(this._velocity);

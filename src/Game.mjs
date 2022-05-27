@@ -21,10 +21,10 @@ export class Game
      * @param {HTMLCanvasElement} canvas - The canvas to render to
      * @param {number} fps - The desired framerate
      * @param {string} background - The default background color
-     * @param {boolean} gravity - Whether or not to enable gravity
+     * @param {boolean} useGravity - Whether or not to enable gravity
      * @memberof Game
      */
-    constructor(canvas, fps, background, gravity=true) 
+    constructor(canvas, fps, background, useGravity=true) 
     {
         this._gameObjects = [];
         this._fps = fps;
@@ -32,7 +32,7 @@ export class Game
         this._canvas = canvas;
         this._camera = new Camera(canvas, background, this);
 
-        this._gravity = gravity;
+        this._useGravity = useGravity;
         this._paused = false;
 
         this._input = new Input(this); // input system
@@ -96,13 +96,13 @@ export class Game
      * @memberof Game
      * @type {boolean}
      * @example
-     * if(game.gravity)
+     * if(game.useGravity)
      * {
      *   console.log("The game uses gravity");
      * }
      */
-    get gravity(){return this._gravity;} // TODO: change misleading name
-    set gravity(gravity){this._gravity = gravity;}
+    get useGravity(){return this._useGravity;} // TODO: change misleading name
+    set useGravity(useGravity){this._useGravity = useGravity;}
 
     /**
      * Whether the game is paused or not. If the game is paused, the game will not update.
