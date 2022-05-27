@@ -44,6 +44,14 @@ export class Game
     
     //#region getters and setters
     /**
+     * The game framerate
+     * @memberof Game
+     * @type {number}
+     * @example
+     * console.log(game.fps);
+     */
+    get fps(){return this._fps;}
+    /**
      * The list of gameobjects.
      * @memberof Game
      * @readonly

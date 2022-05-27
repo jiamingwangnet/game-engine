@@ -149,8 +149,7 @@ export class Physics extends Component
     ApplyGravity()
     {
         if(this._velocity.y*this._velocity.y < this._terminalVelocitySqr) // if the velocity is less than the terminal velocity
-            // TODO: change 60 to be the actual framerate
-            this._velocity.y += this._gravity/60; // 60 is the framerate
+            this._velocity.y += this._gravity/this._game.fps;
         else
             this._velocity.y = Math.sqrt(this._terminalVelocity); // set the velocity to the terminal velocity
     }
