@@ -15,17 +15,22 @@ export class Input
     constructor(game)
     {
         this._keystrokes = {}; // keystrokes and buttons stored as objects for quicker access
+        this._keyClicked = {};
+
         this._buttonDown = {};
+        this._buttonPressed = {};
+
         this._game = game;
         this._mousePosition = new Vector(0, 0);
     }
     //#region getters and setters
-    // TODO: remove these and add functions for handling presses and releases.
+
     /**
      * Gets the list of buttons that were pressed.
      * @type {Object.<number, Object>}
      * @memberof Input
      * @readonly
+     * @deprecated - Use GetButtonDown() instead
      * @example
      * if (input.buttonDown[input.ButtonToCode("left")]) {
      *    console.log("left button pressed");
@@ -38,6 +43,7 @@ export class Input
      * @type {Object.<string, Object>}
      * @memberof Input
      * @readonly
+     * @deprecated - Use GetKeyDown() instead
      * @example
      * if (input.keystrokes["a"]) {
      *   console.log("a key was pressed");
@@ -78,18 +84,10 @@ export class Input
             this._mousePosition = new Vector(e.clientX, e.clientY);
         })
         window.addEventListener("mousedown", e => {
-            const params = {
-                position: new Vector(e.clientX, e.clientY),
-                clicked: true
-            }
-            this._buttonDown[e.button] = params;
+            this._buttonDown[e.button] = true;
         })
         window.addEventListener("mouseup", e => {
-            const params = {
-                position: new Vector(e.clientX, e.clientY),
-                clicked: false
-            }
-            this._buttonDown[e.button] = params;
+            this._buttonDown[e.button] = false;
         })
     }
 
@@ -123,5 +121,55 @@ export class Input
             case "middle": return 1;
             case "right": return 2;
         }
+    }
+
+    GetKeyDown(key)
+    {
+        return this._keystrokes[key];
+    }
+
+    GetKeyPress(key)
+    {
+        if(this.GetKeyDown(key))
+        {
+            this._keyClicked[key] = true;
+        }
+
+        if(this._keyClicked[key] && !this.GetKeyDown(key))
+        {
+            this._keyClicked[key] = false;
+            return true;
+        }
+        return false;
+    }
+
+    GetButtonDownCode(buttonCode)
+    {
+        return this._buttonDown[buttonCode];
+    }
+
+    GetButtonDown(button)
+    {
+        return this.GetButtonDownCode(this.ButtonToCode(button));
+    }
+
+    GetButtonPressCode(button)
+    {
+        if(this.GetButtonDownCode(button))
+        {
+            this._buttonPressed[button] = true;
+        }
+
+        if(this._buttonPressed[button] && !this.GetButtonDownCode(button))
+        {
+            this._buttonPressed[button] = false;
+            return true;
+        }
+        return false;
+    }
+
+    GetButtonPress(button)
+    {
+        return this.GetButtonPressCode(this.ButtonToCode(button));
     }
 }

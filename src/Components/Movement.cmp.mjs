@@ -66,17 +66,17 @@ export class Movement extends Component {
 
         // generates the movement vector using keyboard input
         //                                                                 does a ground check by checking bottom collision and if y velocity is 0
-        if (this._holder._game.input.keystrokes[this._keybinds.JUMP] && this.holder.GetComponent(Physics).baseVelocity.y == 0 && groundCheck.bottom) {           
+        if (this._holder._game.input.GetKeyDown(this._keybinds.JUMP) && this.holder.GetComponent(Physics).baseVelocity.y == 0 && groundCheck.bottom) {           
             this._moveVector.y = -1;
         }
         else {
             this._moveVector.y = 0;
         }
 
-        if (this._holder._game.input.keystrokes[this._keybinds.RIGHT]) {
+        if (this._holder._game.input.GetKeyDown(this._keybinds.RIGHT)) {
             this._moveVector.x = 1;
         }
-        else if (this._holder._game.input.keystrokes[this._keybinds.LEFT]) {
+        else if (this._holder._game.input.GetKeyDown(this._keybinds.LEFT)) {
             this._moveVector.x = -1;
         }
         else {

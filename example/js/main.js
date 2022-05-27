@@ -58,8 +58,7 @@ game.__Load__ = () => {
 game.__Render__ = () => {
 
 }
-let leftclicked = false;
-let middleclicked = false;
+
 game.__Update__ = () => {
     const player = game.GetObject("player");
     const image = game.GetObject("image");
@@ -68,53 +67,36 @@ game.__Update__ = () => {
         game.GetObject("audio").Play();
     }
 
-    const leftDown = game.input.buttonDown[game.input.ButtonToCode("left")];
-    if (leftDown) {
-        if (leftDown.clicked) {
-            leftclicked = true;
-        }
-
-        if (leftclicked && !leftDown.clicked) {
-            const block = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x, game.input.ScreenToWorldPosition(game.input.mousePosition).y, 10, 10, "red", game, "block");
-            game.AddGameObject(block);
-            leftclicked = false;
-        }
+    if(game.input.GetButtonPress("left"))
+    {
+        const block = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x, game.input.ScreenToWorldPosition(game.input.mousePosition).y, 10, 10, "red", game, "block");
+        game.AddGameObject(block);
     }
 
-    const rightdown = game.input.buttonDown[game.input.ButtonToCode("right")];
-    if (rightdown) {
-        if (rightdown.clicked) {
-            const x = Math.floor(Math.random() * 300);
-            const y = Math.floor(Math.random() * 300);
-            const w = Math.floor(Math.random() * 20) + 10;
-            const h = Math.floor(Math.random() * 20) + 10;
+    if(game.input.GetButtonDown("right"))
+    {
+        const x = Math.floor(Math.random() * 300);
+        const y = Math.floor(Math.random() * 300);
 
-            const r = Math.floor(Math.random() * 256);
-            const g = Math.floor(Math.random() * 256);
-            const b = Math.floor(Math.random() * 256);
+        const w = Math.floor(Math.random() * 20) + 10;
+        const h = Math.floor(Math.random() * 20) + 10;
 
-            const block = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x + x, game.input.ScreenToWorldPosition(game.input.mousePosition).y + y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
-            game.AddGameObject(block);
-        }
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+
+        const block = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x + x, game.input.ScreenToWorldPosition(game.input.mousePosition).y + y, w, h, `rgb(${r},${g},${b})`, game, "peepee");
+        game.AddGameObject(block);
     }
 
-    const middledown = game.input.buttonDown[game.input.ButtonToCode("middle")];
-    if (middledown) {
-        if(middledown.clicked)
-        {
-            middleclicked = true;
-        }
-
-        if(middleclicked && !middledown.clicked)
-        {
-            const physicsBlock = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x, game.input.ScreenToWorldPosition(game.input.mousePosition).y, 30, 30, "#00ff00", game, "block");
-            physicsBlock.AddComponent(new Physics(physicsBlock, game, 0.8));
-            game.AddGameObject(physicsBlock);
-            middleclicked = false;
-        }
+    if(game.input.GetButtonPress("middle"))
+    {
+        const physicsBlock = new Block(game.input.ScreenToWorldPosition(game.input.mousePosition).x, game.input.ScreenToWorldPosition(game.input.mousePosition).y, 30, 30, "#00ff00", game, "block");
+        physicsBlock.AddComponent(new Physics(physicsBlock, game, 0.8));
+        game.AddGameObject(physicsBlock);
     }
 
-    if(game.input.keystrokes["f"])
+    if(game.input.GetKeyDown("f"))
     {
         const x = Math.floor(Math.random() * 300);
         const y = Math.floor(Math.random() * 300);
