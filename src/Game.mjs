@@ -101,7 +101,7 @@ export class Game
      *   console.log("The game uses gravity");
      * }
      */
-    get useGravity(){return this._useGravity;} // TODO: change misleading name
+    get useGravity(){return this._useGravity;}
     set useGravity(useGravity){this._useGravity = useGravity;}
 
     /**

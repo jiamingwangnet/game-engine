@@ -70,26 +70,6 @@ export class GameObject
     set height(height){this._height = height;}
 
     /**
-     * The gameObject's attached components. 
-     * @type {Object.<string, Component>} - The components attached to the gameObject
-     * @deprecated Use AddComponent and GetComponent instead
-     * @example
-     * gameObject.components = new BoxCollider();
-     * console.log(gameObject.components["BoxCollider"]); // {BoxCollider: BoxCollider}
-     * @example
-     * const components = gameObject.components;
-     * console.log(components["BoxCollider"]); // {BoxCollider: BoxCollider
-     */
-    get components(){return this._components;}    
-    set components(component) // TODO: remove this function, it's not needed. There is already a addComponent function
-    {
-        // makes sure that the component is a component and there is only one of that type and also not a renderer
-        if(component instanceof Component && !(component instanceof Renderer) && !this.GetComponent(component))
-        this._components.push(component); 
-        else throw new TypeError("Not a valid component");
-    }
-
-    /**
      * The renderer of the gameObject.
      * @type {Renderer}
      * @memberof GameObject
@@ -187,8 +167,12 @@ export class GameObject
      */
     AddComponent(cmp)
     {
-        this._components[cmp.constructor.name] = cmp;
-        return cmp;
+        if(cmp instanceof Component && !(cmp instanceof Renderer) && !this.GetComponent(cmp))
+        {
+            this._components[cmp.constructor.name] = cmp;
+            return cmp;
+        }
+        else throw new TypeError("Not a valid component");
     }
 
     /**
