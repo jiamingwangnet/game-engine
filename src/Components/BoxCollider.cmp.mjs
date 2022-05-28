@@ -42,16 +42,16 @@ export class BoxCollider extends Component {
      * const collider = gameObject.GetComponent(BoxCollider);
      * collider.physics.velocity.x = 100;
      */
-    get physics(){return this._physics;}
+    get physics() { return this._physics; }
 
-    get width() {return this._width;}
-    set width(width) {this._width = width;}
+    get width() { return this._width; }
+    set width(width) { this._width = width; }
 
-    get height() {return this._height;}
-    set height(height) {this._height = height;}
+    get height() { return this._height; }
+    set height(height) { this._height = height; }
 
-    get offset() {return this._offset;}
-    set offset(offset) {this._offset = offset;}
+    get offset() { return this._offset; }
+    set offset(offset) { this._offset = offset; }
 
 
     /**
@@ -82,13 +82,13 @@ export class BoxCollider extends Component {
                 const colliderHolder = collider.holder;
 
                 const colliderRect = {
-                    position: colliderHolder.position,
+                    position: new Vector(colliderHolder.position.x + collider.offset.x, colliderHolder.position.y + collider.offset.y),
                     width: collider.width,
                     height: collider.height
                 };
 
                 const holderRect = {
-                    position: this._holder.position,
+                    position: new Vector(this._holder.position.x + this._offset.x, this._holder.position.y + this._offset.y),
                     width: this._width,
                     height: this._height
                 };
@@ -114,7 +114,7 @@ export class BoxCollider extends Component {
                 */
                 //             this check makes sure that left is the closest side
                 if (collisionRect["left"] && (clipDistances.left < clipDistances.top && clipDistances.left < clipDistances.bottom)) {
-                    if(collider.physics) // checks if the other object is a physics object
+                    if (collider.physics) // checks if the other object is a physics object
                         this.physics.Push(collider.physics); // adds velocity to the other object to push it
                     else
                         this._physics.baseVelocity.x = 0; // if not, stop the collider holder
@@ -123,7 +123,7 @@ export class BoxCollider extends Component {
 
                 //                          makes sure right is the closest
                 if (collisionRect["right"] && (clipDistances.right < clipDistances.top && clipDistances.right < clipDistances.bottom)) {
-                    if(collider.physics)
+                    if (collider.physics)
                         this.physics.Push(collider.physics); // pushes the other object
                     else
                         this._physics.baseVelocity.x = 0;
@@ -154,12 +154,12 @@ export class BoxCollider extends Component {
      */
     _Collide(collider) {
         const rect1 = {
-            position: this.holder.position,
-            width: this.width,
-            height: this.height
+            position: new Vector(this._holder.position.x + this._offset.x, this._holder.position.y + this._offset.y),
+            width: this._width,
+            height: this._height
         };
         const rect2 = {
-            position: collider.holder.position,
+            position: new Vector(colliderHolder.position.x + collider.offset.x, colliderHolder.position.y + collider.offset.y),
             width: collider.width,
             height: collider.height
         };
@@ -209,32 +209,32 @@ export class BoxCollider extends Component {
      */
     Collide(collider) {
         const rect1 = {
-            position: this.holder.position,
-            width: this.width,
-            height: this.height
+            position: new Vector(this._holder.position.x + this._offset.x, this._holder.position.y + this._offset.y),
+            width: this._width,
+            height: this._height
         };
         const rect2 = {
-            position: collider.holder.position,
+            position: new Vector(colliderHolder.position.x + collider.offset.x, colliderHolder.position.y + collider.offset.y),
             width: collider.width,
             height: collider.height
         };
 
         // repeated checks are seperated into their own variables
         const xCol = rect1.position.x < rect2.position.x + rect2.width + 1 &&
-        rect1.position.x + rect1.width > rect2.position.x - 1;
-        const yCol =  rect1.position.y < rect2.position.y + rect2.height + 1 &&
-        rect1.position.y + rect1.height > rect2.position.y - 1;
+            rect1.position.x + rect1.width > rect2.position.x - 1;
+        const yCol = rect1.position.y < rect2.position.y + rect2.height + 1 &&
+            rect1.position.y + rect1.height > rect2.position.y - 1;
 
         // calcualte collision for each side
         const left = rect1.position.x < rect2.position.x + rect2.width + 1 &&
             rect1.position.x + rect1.width > rect2.position.x + rect2.width + 1 && yCol
-           
+
         const right = rect1.position.x + rect1.width > rect2.position.x - 1 &&
             rect1.position.x < rect2.position.x - 1 && yCol
 
         const bottom = rect1.position.y + rect1.height > rect2.position.y - 1 &&
             rect1.position.y < rect2.position.y - 1 && xCol
-            
+
         const top = rect1.position.y < rect2.position.y + rect2.height + 1 &&
             rect1.position.y + rect1.height > rect2.position.y + rect2.height + 1 && xCol
 
@@ -302,19 +302,19 @@ export class BoxCollider extends Component {
             const collider = gobj.GetComponent(BoxCollider);
             if (collider) {
                 const gobjRect = {
-                    position: gobj.position,
+                    position: new Vector(colliderHolder.position.x + collider.offset.x, colliderHolder.position.y + collider.offset.y),
                     width: collider.width,
                     height: collider.height
                 };
 
                 const holderRect = {
-                    position: this.holder.position,
-                    width: this.width,
-                    height: this.height
+                    position: new Vector(this._holder.position.x + this._offset.x, this._holder.position.y + this._offset.y),
+                    width: this._width,
+                    height: this._height
                 };
 
                 const clipDistances = {
-                    top: Math.abs((gobjRect.position.y + gobjRect.height) -holderRect.position.y),
+                    top: Math.abs((gobjRect.position.y + gobjRect.height) - holderRect.position.y),
                     bottom: Math.abs(gobjRect.position.y - (holderRect.position.y + holderRect.height)),
                     left: Math.abs((gobjRect.position.x + gobjRect.width) - holderRect.position.x),
                     right: Math.abs(gobjRect.position.x - (holderRect.position.x + holderRect.width))
