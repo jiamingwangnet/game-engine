@@ -50,6 +50,9 @@ export class BoxCollider extends Component {
     get height() {return this._height;}
     set height(height) {this._height = height;}
 
+    get offset() {return this._offset;}
+    set offset(offset) {this._offset = offset;}
+
 
     /**
      * Unused
