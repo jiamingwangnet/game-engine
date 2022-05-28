@@ -138,8 +138,16 @@ export class BoxCollider extends Component {
      * @memberof BoxCollider
      */
     _Collide(collider) {
-        const rect1 = this.holder;
-        const rect2 = collider.holder;
+        const rect1 = {
+            position: this.holder.position,
+            width: this.width,
+            height: this.height
+        };
+        const rect2 = {
+            position: collider.holder.position,
+            width: collider.width,
+            height: collider.height
+        };
 
         // repeated checks are seperated into their own variables
         const yCol = rect1.position.y < rect2.position.y + rect2.height &&
@@ -185,8 +193,16 @@ export class BoxCollider extends Component {
      * @memberof BoxCollider
      */
     Collide(collider) {
-        const rect1 = this.holder;
-        const rect2 = collider.holder;
+        const rect1 = {
+            position: this.holder.position,
+            width: this.width,
+            height: this.height
+        };
+        const rect2 = {
+            position: collider.holder.position,
+            width: collider.width,
+            height: collider.height
+        };
 
         // repeated checks are seperated into their own variables
         const xCol = rect1.position.x < rect2.position.x + rect2.width + 1 &&
@@ -270,11 +286,17 @@ export class BoxCollider extends Component {
 
             const collider = gobj.GetComponent(BoxCollider);
             if (collider) {
+                const gobjRect = {
+                    position: gobj.position,
+                    width: collider.width,
+                    height: collider.height
+                };
+
                 const clipDistances = {
-                    top: Math.abs((gobj.position.y + gobj.height) - this.holder.position.y),
-                    bottom: Math.abs(gobj.position.y - (this.holder.position.y + this.holder.height)),
-                    left: Math.abs((gobj.position.x + gobj.width) - this.holder.position.x),
-                    right: Math.abs(gobj.position.x - (this.holder.position.x + this.holder.width))
+                    top: Math.abs((gobjRect.position.y + gobjRect.height) - this.holder.position.y),
+                    bottom: Math.abs(gobjRect.position.y - (this.holder.position.y + this.holder.height)),
+                    left: Math.abs((gobjRect.position.x + gobjRect.width) - this.holder.position.x),
+                    right: Math.abs(gobjRect.position.x - (this.holder.position.x + this.holder.width))
                 }
 
                 res.collided = res.collided || this.Collide(collider).collided;
