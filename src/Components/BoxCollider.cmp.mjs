@@ -78,6 +78,18 @@ export class BoxCollider extends Component {
             if (hasCollided) { // only do physics changes when there is a collision
                 const colliderHolder = collider.holder;
 
+                const colliderRect = {
+                    position: colliderHolder.position,
+                    width: collider.width,
+                    height: collider.height
+                };
+
+                const holderRect = {
+                    position: this._holder.position,
+                    width: this._width,
+                    height: this._height
+                };
+
                 /**
                  * @typedef clipDistances
                  * @property {number} top - distance between holder's top and other collider's bottom
@@ -87,10 +99,10 @@ export class BoxCollider extends Component {
                  */
 
                 const clipDistances = { // calculate the distances between the opposite sides
-                    top: Math.abs((colliderHolder.position.y + colliderHolder.height) - this.holder.position.y), // distance between holder's top and other object's bottom
-                    bottom: Math.abs(colliderHolder.position.y - (this.holder.position.y + this.holder.height)), // holder's bottom and object's top
-                    left: Math.abs((colliderHolder.position.x + colliderHolder.width) - this.holder.position.x), // holder's left and object's right
-                    right: Math.abs(colliderHolder.position.x - (this.holder.position.x + this.holder.width))    // holder's right and object's left
+                    top: Math.abs((colliderRect.position.y + colliderRect.height) - holderRect.position.y), // distance between holder's top and other object's bottom
+                    bottom: Math.abs(colliderRect.position.y - (holderRect.position.y + holderRect.height)), // holder's bottom and object's top
+                    left: Math.abs((colliderRect.position.x + colliderRect.width) - holderRect.position.x), // holder's left and object's right
+                    right: Math.abs(colliderRect.position.x - (holderRect.position.x + holderRect.width))    // holder's right and object's left
                 }
 
                 /*
@@ -103,7 +115,7 @@ export class BoxCollider extends Component {
                         this.physics.Push(collider.physics); // adds velocity to the other object to push it
                     else
                         this._physics.baseVelocity.x = 0; // if not, stop the collider holder
-                    this.holder.position.x = collider.holder.position.x + collider.holder.width; // clips the holder to the correct position, on the right of the other object
+                    this.holder.position.x = colliderRect.position.x + colliderRect.width; // clips the holder to the correct position, on the right of the other object
                 }
 
                 //                          makes sure right is the closest
@@ -112,18 +124,18 @@ export class BoxCollider extends Component {
                         this.physics.Push(collider.physics); // pushes the other object
                     else
                         this._physics.baseVelocity.x = 0;
-                    this.holder.position.x = collider.holder.position.x - this.holder.width; // clips to the correct position, on the left of the other object
+                    this.holder.position.x = colliderRect.position.x - holderRect.width; // clips to the correct position, on the left of the other object
                 }
 
                 //                              The same comparison for the top and bottom
                 if (collisionRect["bottom"] && (clipDistances.bottom < clipDistances.left && clipDistances.bottom < clipDistances.right)) {
                     this._physics.baseVelocity.y = 0; // no pushing on the y axis
-                    this.holder.position.y = collider.holder.position.y - this.holder.height; // clips to the other object's top
+                    this.holder.position.y = colliderRect.position.y - holderRect.height; // clips to the other object's top
                 }
 
                 if (collisionRect["top"] && (clipDistances.top < clipDistances.left && clipDistances.top < clipDistances.right)) {
                     this._physics.baseVelocity.y = 0;
-                    this.holder.position.y = collider.holder.position.y + collider.holder.height; // clips to the other object's bottom
+                    this.holder.position.y = colliderRect.position.y + colliderRect.height; // clips to the other object's bottom
                 }
             }
 
@@ -292,11 +304,17 @@ export class BoxCollider extends Component {
                     height: collider.height
                 };
 
+                const holderRect = {
+                    position: this.holder.position,
+                    width: this.width,
+                    height: this.height
+                };
+
                 const clipDistances = {
-                    top: Math.abs((gobjRect.position.y + gobjRect.height) - this.holder.position.y),
-                    bottom: Math.abs(gobjRect.position.y - (this.holder.position.y + this.holder.height)),
-                    left: Math.abs((gobjRect.position.x + gobjRect.width) - this.holder.position.x),
-                    right: Math.abs(gobjRect.position.x - (this.holder.position.x + this.holder.width))
+                    top: Math.abs((gobjRect.position.y + gobjRect.height) -holderRect.position.y),
+                    bottom: Math.abs(gobjRect.position.y - (holderRect.position.y + holderRect.height)),
+                    left: Math.abs((gobjRect.position.x + gobjRect.width) - holderRect.position.x),
+                    right: Math.abs(gobjRect.position.x - (holderRect.position.x + holderRect.width))
                 }
 
                 res.collided = res.collided || this.Collide(collider).collided;
