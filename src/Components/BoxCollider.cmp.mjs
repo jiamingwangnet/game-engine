@@ -159,7 +159,7 @@ export class BoxCollider extends Component {
             height: this._height
         };
         const rect2 = {
-            position: new Vector(colliderHolder.position.x + collider.offset.x, colliderHolder.position.y + collider.offset.y),
+            position: new Vector(collider._holder.position.x + collider.offset.x, collider._holder.position.y + collider.offset.y),
             width: collider.width,
             height: collider.height
         };
@@ -214,7 +214,7 @@ export class BoxCollider extends Component {
             height: this._height
         };
         const rect2 = {
-            position: new Vector(colliderHolder.position.x + collider.offset.x, colliderHolder.position.y + collider.offset.y),
+            position: new Vector(collider._holder.position.x + collider.offset.x, collider._holder.position.y + collider.offset.y),
             width: collider.width,
             height: collider.height
         };
@@ -302,7 +302,7 @@ export class BoxCollider extends Component {
             const collider = gobj.GetComponent(BoxCollider);
             if (collider) {
                 const gobjRect = {
-                    position: new Vector(colliderHolder.position.x + collider.offset.x, colliderHolder.position.y + collider.offset.y),
+                    position: new Vector(gobj.position.x + collider.offset.x, gobj.position.y + collider.offset.y),
                     width: collider.width,
                     height: collider.height
                 };
