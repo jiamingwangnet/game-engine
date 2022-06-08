@@ -5,6 +5,8 @@ import { Block } from "../../src/GameObject/Block.gobj.mjs";
 import { Player } from "./Player.gobj.mjs";
 import { Vector } from "../../src/Vector.mjs";
 import { AudioObj } from "../../src/GameObject/AudioObj.gobj.mjs";
+import { LightObject } from "../../src/GameObject/LightObject.gobj.mjs";
+import { Color } from "../../src/Color.mjs";
 
 const canvas = document.querySelector("#c");
 const game = new Game(canvas, 120, "#000000", true);
@@ -52,6 +54,9 @@ game.__Load__ = () => {
     const audio = new AudioObj("./assets/test.wav", "audio", game);
     game.AddGameObject(audio);
 
+    const light = new LightObject(0, 0, 100, 100, new Color(255, 255, 255, 255), game, "light");
+    game.AddGameObject(light);
+    
     game.camera.follow = player;
 }
 
