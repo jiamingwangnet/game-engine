@@ -170,6 +170,7 @@ export class GameObject
         if(cmp instanceof Component && !(cmp instanceof Renderer) && !this.GetComponent(cmp))
         {
             this._components[cmp.constructor.name] = cmp;
+            cmp.Start();
             return cmp;
         }
         else throw new TypeError("Not a valid component");
