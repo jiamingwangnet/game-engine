@@ -11,7 +11,7 @@ export class Light extends Component
         this._intensity = intensity;
         this._color = color;
         this._maxlevel = maxlevel;
-        this._renderer = holder.GetComponent(Renderer);
+        this._renderer = holder.renderer;
         this._buffer = [];
     }
 
@@ -29,20 +29,21 @@ export class Light extends Component
                 const ysqr = Math.pow(yLoop - y, 2);
 
                 if (xsqr + ysqr <= this._radius ** 2) {
-                    this._buffer[yLoop][xLoop] = this.intensity - Math.sqrt(xsqr + ysqr);
+                    this._buffer[yLoop][xLoop] = this._intensity - Math.sqrt(xsqr + ysqr);
                 }
             }
         }
+        console.log(this._buffer)
     }
 
     CreateRenderImage()
     {
-        for (let i = 0; i < this.buffer.length; i++) {
-            for (let j = 0; j < this.buffer[i].length; j++) {
-                const level = this.buffer[i][j];
+        for (let i = 0; i < this._buffer.length; i++) {
+            for (let j = 0; j < this._buffer[i].length; j++) {
+                const level = this._buffer[i][j];
                 
-                const color = new Color(this._color.red, this._color.green, this._color.blue, level / this._maxlevel);
-                this._renderer.SetPixel(color, j, i);
+                const color = new Color(this._color.r, this._color.g, this._color.b, level / this._maxlevel * 255 );
+                this._renderer.SetPixel(color.colorRGB, j, i);
             }
         }
     }
