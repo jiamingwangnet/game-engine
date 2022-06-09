@@ -116,6 +116,12 @@ game.__Update__ = () => {
         block.AddComponent(new Physics(block, game, 0.48));
         game.AddGameObject(block);
     }
+
+    if(game.input.GetKeyPress("v"))
+    {
+        const light = new LightObject(game.input.ScreenToWorldPosition(game.input.mousePosition).x, game.input.ScreenToWorldPosition(game.input.mousePosition).y, 250, 200, new Color(255, 255, 255, 255), game, "light");
+        game.AddGameObject(light);
+    }
 }
 
 game.MainLoop();
