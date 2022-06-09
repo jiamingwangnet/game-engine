@@ -73,11 +73,11 @@ export class Renderer extends Component
         this._UpdateImage();
     }
 
-    get width(){return this._width;}
-    set width(width){this._width = width;}
+    get width(){return this._drawing.width;}
+    set width(width){this._drawing.width = width;}
 
-    get height(){return this._height;}
-    set height(height){this._height = height;}
+    get height(){return this._drawing.height;}
+    set height(height){this._drawing.height = height;}
 
     /**
      * Updates and reloads the image
@@ -189,8 +189,8 @@ export class Renderer extends Component
      */
     SetPixel(color, x, y)
     {
-        if(x > this._width || x < 0) throw new IndexOutOfRangeException("x must be within the width"); // try changing this for an assert
-        if(y > this._height || x < 0) throw new IndexOutOfRangeException("y must be within the height");
+        if(x > this._drawing.width || x < 0) throw new IndexOutOfRangeException("x must be within the width"); // try changing this for an assert
+        if(y > this._drawing.height || x < 0) throw new IndexOutOfRangeException("y must be within the height");
 
         const ctx = this._drawing.getContext("2d");
         ctx.fillStyle = color;
@@ -214,10 +214,10 @@ export class Renderer extends Component
      */
     SetPixels(color, x, y, width, height)
     {
-        if(x > this._width || x < 0) throw new IndexOutOfRangeException("x must be within the width");
-        if(y > this._height || x < 0) throw new IndexOutOfRangeException("y must be within the height");
-        if(width > this._width || width < 0) throw new IndexOutOfRangeException("x must be within the width");
-        if(height > this._height || height < 0) throw new IndexOutOfRangeException("y must be within the height");
+        if(x > this._drawing.width || x < 0) throw new IndexOutOfRangeException("x must be within the width");
+        if(y > this._drawing.height || x < 0) throw new IndexOutOfRangeException("y must be within the height");
+        if(width > this._drawing.width || width < 0) throw new IndexOutOfRangeException("x must be within the width");
+        if(height > this._drawing.height || height < 0) throw new IndexOutOfRangeException("y must be within the height");
 
         const ctx = this._drawing.getContext("2d");
         ctx.fillStyle = color;
