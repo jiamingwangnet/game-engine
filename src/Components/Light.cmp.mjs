@@ -33,7 +33,6 @@ export class Light extends Component
                 }
             }
         }
-        console.log(this._buffer)
     }
 
     CreateRenderImage()
@@ -42,7 +41,7 @@ export class Light extends Component
             for (let j = 0; j < this._buffer[i].length; j++) {
                 const level = this._buffer[i][j];
                 
-                const color = new Color(this._color.r, this._color.g, this._color.b, level / this._maxlevel * 255 );
+                const color = new Color(this._color.r, this._color.g, this._color.b, level / this._maxlevel);
                 this._renderer.SetPixel(color.colorRGB, j, i);
             }
         }
