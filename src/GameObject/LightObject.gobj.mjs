@@ -5,7 +5,7 @@ export class LightObject extends GameObject
 {
     constructor(x, y, radius, intensity, color, game, name, maxlevel=500, )
     {
-        super(x, y, 1, 1, game, name);
+        super(x, y, 1, 1, game, name, 10000000000);
         this._radius = radius;
         this._intensity = intensity;
         this._color = color;
