@@ -30,7 +30,7 @@ export class GameObject
      * @param {string} name - The name of the gameObject
      * @memberof GameObject
      */
-    constructor(x, y, width, height, game, name)
+    constructor(x, y, width, height, game, name, updateOrder = 0)
     {
         if (this.constructor == Component) {
             throw new Error("Abstract classes can't be instantiated.");
@@ -44,6 +44,7 @@ export class GameObject
         this._name = name;
         this._started = false;
         this._lastUpdated = Date.now(); // the last time the update function was called
+        this._updateOrder = updateOrder;
     }
 
     //#region getters and setters

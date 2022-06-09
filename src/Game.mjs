@@ -279,11 +279,17 @@ export class Game
         {
             this._gameObjects.push(gameObject);
             gameObject.Start(); // initialize the gameobject
+            this.ReorderGameObjectList();
         }
         else
         {
             throw new TypeError("Not a gameobject");
         }
+    }
+
+    ReorderGameObjectList()
+    {
+        this._gameObjects.sort((a, b) => a._updateOrder - b._updateOrder);
     }
 
     /**
