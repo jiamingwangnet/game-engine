@@ -1,11 +1,12 @@
 import { Light } from "../Components/Light.cmp.mjs";
 import { GameObject } from "../GameObject.mjs";
+import Layers from "../Layers.mjs";
 
 export class LightObject extends GameObject
 {
     constructor(x, y, radius, intensity, color, game, name, maxlevel=500, )
     {
-        super(x, y, radius * 2, radius * 2, game, name, 10000000000);
+        super(x, y, radius * 2, radius * 2, game, name, Layers.Light0);
         this._radius = radius;
         this._intensity = intensity;
         this._color = color;

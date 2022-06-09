@@ -1,6 +1,7 @@
 import { Component } from "./Component.mjs";
 import { Renderer } from "./Components/Renderer.cmp.mjs";
 import { Vector } from "./Vector.mjs";
+import Layers from "./Layers.mjs";
 
 /**
  * The abstract GameObject class
@@ -30,7 +31,7 @@ export class GameObject
      * @param {string} name - The name of the gameObject
      * @memberof GameObject
      */
-    constructor(x, y, width, height, game, name, updateOrder = 0)
+    constructor(x, y, width, height, game, name, updateOrder = Layers.Object0)
     {
         if (this.constructor == Component) {
             throw new Error("Abstract classes can't be instantiated.");
