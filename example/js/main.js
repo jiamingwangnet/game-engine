@@ -54,9 +54,9 @@ game.__Load__ = () => {
     const audio = new AudioObj("./assets/test.wav", "audio", game);
     game.AddGameObject(audio);
 
-    const light = new LightObject(0, 0, 100, 100, new Color(255, 255, 255, 255), game, "light");
+    const light = new LightObject(0, 0, 150, 100, new Color(255, 255, 255, 255), game, "light");
     game.AddGameObject(light);
-    
+
     game.camera.follow = player;
 }
 
