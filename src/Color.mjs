@@ -3,7 +3,7 @@ export class Color {
         if ((r > 0xff || g > 0xff || b > 0xff) || (r < 0 || g < 0 || b < 0)) {
             throw new Error("Colors must be < 256 and >= 0");
         }
-        this.color = r && g && b ? r * 0x10000 + g * 0x100 + b : raw;
+        this.color = !(!r && r !== 0) && !(!g && g !== 0) && !(!b && b !== 0) ? r * 0x10000 + g * 0x100 + b : raw;
         this._a = a; // alpha is stored as a float seperatly
     }
 
