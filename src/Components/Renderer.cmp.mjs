@@ -1,6 +1,7 @@
 import { Component } from "../Component.mjs";
 import { IndexOutOfRangeException } from "../Exceptions/IndexOutOfRangeException.exc.js";
 import { Vector } from "../Vector.mjs";
+import { Color } from "../Color.mjs";
 
 /**
  * A component for handling rendering
@@ -30,7 +31,7 @@ export class Renderer extends Component
     constructor(canvas, width, height, x, y, holder, imagePath=undefined)
     {
         super(holder);
-        this._color = "#00000000"; // default color
+        this._color = new Color(0, 0, 0, 0); // default color
         this._imagePath = imagePath;
         this._using = Renderer.Color; // default to color mode
         this._canvas = canvas;
@@ -48,7 +49,7 @@ export class Renderer extends Component
 
     /**
      * The color of the renderer
-     * @type {string}
+     * @type {Color}
      * @memberof Renderer
      * @example
      * const player = new GameObject(...args);
@@ -177,7 +178,7 @@ export class Renderer extends Component
     /**
      * Sets a pixel to the color on the image
      * @memberof Renderer
-     * @param {string} color - the color to set the pixel to
+     * @param {Color} color - the color to set the pixel to
      * @param {number} x - the x position of the pixel
      * @param {number} y - the y position of the pixel
      * @example
@@ -193,13 +194,13 @@ export class Renderer extends Component
         if(y > this._drawing.height || x < 0) throw new IndexOutOfRangeException("y must be within the height");
 
         const ctx = this._drawing.getContext("2d");
-        ctx.fillStyle = color;
+        ctx.fillStyle = color.colorRGB;
         ctx.fillRect(x, y, 1, 1);
     }
 
     /**
      * Sets multiple pixel colors using width and height
-     * @param {string} color - the color to set the pixels to
+     * @param {Color} color - the color to set the pixels to
      * @param {number} x - the x position of the pixel
      * @param {number} y - the y position of the pixel
      * @param {number} width - the width of the pixels
@@ -220,7 +221,7 @@ export class Renderer extends Component
         if(height > this._drawing.height || height < 0) throw new IndexOutOfRangeException("y must be within the height");
 
         const ctx = this._drawing.getContext("2d");
-        ctx.fillStyle = color;
+        ctx.fillStyle = color.colorRGB;
         ctx.fillRect(x, y, width, height);
     }
 }

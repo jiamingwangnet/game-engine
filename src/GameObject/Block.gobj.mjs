@@ -2,6 +2,7 @@ import { BoxCollider } from "../Components/BoxCollider.cmp.mjs";
 import { Physics } from "../Components/Physics.cmp.mjs";
 import { GameObject } from "../GameObject.mjs";
 import { Game } from "../Game.mjs";
+import { Color } from "../Color.mjs";
 
 /**
  * Pre-made block object
@@ -19,7 +20,7 @@ export class Block extends GameObject
      * @param {number} y - the y position of the block
      * @param {number} width - the width of the block
      * @param {number} height - the height of the block
-     * @param {string} color - the color of the block
+     * @param {Color} color - the color of the block
      * @param {Game} game - the game that the block belongs to
      * @param {string} name - the name of the block
      * @param {string} image - the image of the block, if not using a color
