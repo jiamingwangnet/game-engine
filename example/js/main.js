@@ -61,7 +61,22 @@ game.__Load__ = () => {
 }
 
 game.__Render__ = () => {
+    // game.camera.processImage = frame => {
+    //     const offset = new Vector(game.input.mousePosition.x, game.input.mousePosition.y);
+    //     for(let x = 0; x < 35; x++) {
+    //         for(let y = 0; y < 35; y++) {
+    //             const inverse = new Color(255 - frame.GetPixel(x+ offset.x, y+ offset.y).r, 255 - frame.GetPixel(x+ offset.x, y+ offset.y).g, 255 - frame.GetPixel(x+ offset.x, y+ offset.y).b, 255 - frame.GetPixel(x+ offset.x, y+ offset.y).a);
+    //             frame.SetPixel(inverse, x+ offset.x, y+ offset.y);
+    //         }
+    //     }
+    // }
 
+    game.camera.processImage = frame => {
+        const image = frame.GetPixelsRaw(0,0, game.canvas.width, game.canvas.height);
+        for(let i = 0; i < image.data.length; i+=4) {
+            //const color = new Color(image.data[i], image.data[i+1], image.data[i+2], image.data[i+3]);
+        }
+    }
 }
 
 game.__Update__ = () => {
