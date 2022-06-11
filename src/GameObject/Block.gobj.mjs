@@ -39,7 +39,7 @@ export class Block extends GameObject
      */
     __Start__() {
         if(this._image)
-            this.renderer.imagePath = this._image; // initialize the image path
+            this.renderer.PutImage(this._image, 0, 0); // initialize the image path
         else
             this.renderer.SetPixels(this._color, 0, 0, this._width, this._height); // if there is no image, fill the whole block with the color
 

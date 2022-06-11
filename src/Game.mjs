@@ -1,4 +1,5 @@
 import { Camera } from "./Camera.mjs";
+import { Color } from "./Color.mjs";
 import { GameObject } from "./GameObject.mjs";
 import { Input } from "./Input.mjs";
 
@@ -20,7 +21,7 @@ export class Game
      * The game constructor
      * @param {HTMLCanvasElement} canvas - The canvas to render to
      * @param {number} fps - The desired framerate
-     * @param {string} background - The default background color
+     * @param {Color} background - The default background color
      * @param {boolean} useGravity - Whether or not to enable gravity
      * @memberof Game
      */

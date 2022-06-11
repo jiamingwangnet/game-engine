@@ -40,7 +40,7 @@ export class GameObject
         this._width = width;
         this._height = height;
         this._components = {}; // components are stored in an object for quicker access using key-value pairs
-        this._renderer = new Renderer(game.canvas, width, height, x, y, this);
+        this._renderer = new Renderer(game.camera, width, height, x, y, this);
         this._game = game;
         this._name = name;
         this._started = false;

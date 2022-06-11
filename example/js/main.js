@@ -9,7 +9,7 @@ import { LightObject } from "../../src/GameObject/LightObject.gobj.mjs";
 import { Color } from "../../src/Color.mjs";
 
 const canvas = document.querySelector("#c");
-const game = new Game(canvas, 120, "#000000", true);
+const game = new Game(canvas, 120, new Color(0,0,0,1), true);
 
 game.__Load__ = () => {
     const player = new Player(100, 500, game, "player");

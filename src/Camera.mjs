@@ -1,4 +1,6 @@
+import { Color } from "./Color.mjs";
 import { GameObject } from "./GameObject.mjs";
+import { RenderSurface } from "./RenderSurface.mjs";
 import { Vector } from "./Vector.mjs";
 
 /**
@@ -10,7 +12,7 @@ export class Camera
     /**
      * The camera constructor.
      * @param {HTMLCanvasELement} canvas - The canvas to render to
-     * @param {string} background - The default background color
+     * @param {Color} background - The default background color
      * @param {Game} game - The game that this camera is attached to
      * @param {number} x - The x position of the camera
      * @param {number} y - The y position of the camera
@@ -24,6 +26,7 @@ export class Camera
         this._position = new Vector(x, y);
         this._follow = follow;
         this._game = game;
+        this._currentFrame = new RenderSurface(0,0,this._canvas.width, this._canvas.height);
     }
     //#region getters and setters
 
@@ -48,6 +51,8 @@ export class Camera
      */
     get position(){return this._position;}
     set position(position){this._position = position;}
+
+    get currentFrame(){return this._currentFrame;}
     //#endregion
 
     /**
@@ -59,10 +64,11 @@ export class Camera
     Render(renderList, lagOffset)
     {
         this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height); // clears the screen
+        
+        this._currentFrame = new RenderSurface(0, 0, this._canvas.width, this._canvas.height); // creates a new render surface
 
         // draws the background
-        this._ctx.fillStyle = this._background;
-        this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
+        this._currentFrame.SetPixels(this._background, 0, 0, this._canvas.width, this._canvas.height);
         
         for(const object of renderList)
         {
@@ -71,6 +77,8 @@ export class Camera
                 object.Render(this._position.x, this._position.y, lagOffset);
             }
         }
+
+        this._ctx.drawImage(this._currentFrame.surface, this._currentFrame.x, this._currentFrame.y); // draws the current frame
     }
 
     /**
