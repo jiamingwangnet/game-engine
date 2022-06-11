@@ -27,6 +27,7 @@ export class Camera
         this._follow = follow;
         this._game = game;
         this._currentFrame = new RenderSurface(0,0,this._canvas.width, this._canvas.height);
+        this._processImage = frame => {};
     }
     //#region getters and setters
 
@@ -53,6 +54,9 @@ export class Camera
     set position(position){this._position = position;}
 
     get currentFrame(){return this._currentFrame;}
+
+    get processImage(){return this._processImage;}
+    set processImage(processImage){this._processImage = processImage;}
     //#endregion
 
     /**
@@ -77,6 +81,8 @@ export class Camera
                 object.Render(this._position.x, this._position.y, lagOffset);
             }
         }
+
+        this.processImage(this._currentFrame);
 
         this._ctx.drawImage(this._currentFrame.surface, this._currentFrame.x, this._currentFrame.y); // draws the current frame
     }
