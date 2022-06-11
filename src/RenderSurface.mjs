@@ -1,4 +1,5 @@
 import { IndexOutOfRangeException } from "./Exceptions/IndexOutOfRangeException.exc.js";
+import { Color } from "./Color.mjs";
 
 export class RenderSurface
 {
@@ -67,5 +68,15 @@ export class RenderSurface
         const ctx = this._surface.getContext("2d");
         ctx.fillStyle = color.colorRGB;
         ctx.fillRect(x, y, width, height);
+    }
+
+    GetPixel(x, y)
+    {
+        if(x > this._surface.width || x < 0) throw new IndexOutOfRangeException("x must be within the width");
+        if(y > this._surface.height || x < 0) throw new IndexOutOfRangeException("y must be within the height");
+
+        const ctx = this._surface.getContext("2d");
+        const pixel = ctx.getImageData(x, y, 1, 1);
+        return new Color(pixel.data[0], pixel.data[1], pixel.data[2], pixel.data[3]);
     }
 }
